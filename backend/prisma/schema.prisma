@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Tenant {
+  id               String        @id @default(uuid())
+  name             String
+  subscriptionTier String        @default("starter") // starter, growth, scale
+  maxLeads         Int           @default(1000)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  users            User[]
+  contacts         Contact[]
+  requirements     Requirement[]
+  properties       Property[]
+  deals            Deal[]
+  activities       Activity[]
+  tasks            Task[]
+}
+
+model User {
+  id         String     @id @default(uuid())
+  name       String
+  email      String     @unique
+  phone      String?
+  role       String     @default("agent") // agent, manager, owner
+  tenantId   String
+  tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  deals      Deal[]     @relation("AgentDeals")
+  activities Activity[] @relation("AgentActivities")
+}
+
+model Contact {
+  id           String        @id @default(uuid())
+  name         String
+  phone        String
+  email        String?
+  source       String?
+  tenantId     String
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  requirements Requirement[]
+  activities   Activity[]
+  tasks        Task[]
+  jobTitle     String?
+  company      String?
+  intentScore  String?       @default("medium") // high, medium, low
+}
+
+model Requirement {
+  id           String    @id @default(uuid())
+  type         String    // buy, rent
+  bedrooms     Int
+  budgetMin    Float
+  budgetMax    Float
+  currency     String    @default("INR")
+  locations    String    // Comma-separated list or JSON array of strings
+  propertyType String    // apartment, villa, commercial, land, etc.
+  timeline     String?
+  status       String    @default("active") // active, closed, inactive
+  contactId    String
+  contact      Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  tenantId     String
+  tenant       Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deals        Deal[]
+}
+
+model Property {
+  id             String         @id @default(uuid())
+  title          String
+  type           String         // buy, rent
+  propertyType   String         // apartment, villa, commercial, land, etc.
+  bedrooms       Int
+  price          Float
+  currency       String         @default("INR")
+  area           Float
+  areaUnit       String         @default("sqft") // sqft, sqyd, sqmt
+  location       String
+  status         String         @default("available") // available, on_hold, sold
+  media          String?        // JSON string of media file paths/URLs
+  tenantId       String
+  tenant         Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  dealProperties DealProperty[]
+}
+
+model Deal {
+  id             String         @id @default(uuid())
+  requirementId  String
+  requirement    Requirement    @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+  stage          String         @default("new_match") // new_match, contacted, shortlisted, visit_scheduled, negotiation, won, lost
+  ownerAgentId   String
+  ownerAgent     User           @relation("AgentDeals", fields: [ownerAgentId], references: [id], onDelete: Cascade)
+  tenantId       String
+  tenant         Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  closedAt       DateTime?
+  dealProperties DealProperty[]
+  activities     Activity[]
+  tasks          Task[]
+  documents      Document[]
+}
+
+model DealProperty {
+  id              String     @id @default(uuid())
+  dealId          String
+  deal            Deal       @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  propertyId      String
+  property        Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  status          String     @default("interested") // interested, shortlisted, visited, rejected, won, lost
+  matchScore      Float
+  rejectionReason String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  activities      Activity[]
+}
+
+model Activity {
+  id             String        @id @default(uuid())
+  contactId      String
+  contact        Contact       @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  dealId         String?
+  deal           Deal?         @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  dealPropertyId String?
+  dealProperty   DealProperty? @relation(fields: [dealPropertyId], references: [id], onDelete: Cascade)
+  type           String        // system, whatsapp_out, whatsapp_in, call_log, email, note, stage_change
+  content        String
+  agentId        String?
+  agent          User?         @relation("AgentActivities", fields: [agentId], references: [id], onDelete: SetNull)
+  tenantId       String
+  tenant         Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  timestamp      DateTime      @default(now())
+}
+
+model Task {
+  id        String   @id @default(uuid())
+  title     String
+  type      String   // visit, call, followup
+  date      DateTime
+  status    String   @default("pending") // pending, completed
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  dealId    String?
+  deal      Deal?    @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  title     String
+  type      String   // "lease", "brokerage"
+  content   String   // Text block containing compiling terms
+  dealId    String
+  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,6 @@
+Name,Phone,Email,RequirementType,PropertyType,Bedrooms,BudgetMin,BudgetMax,Currency,Locations,Timeline
+Aadi Modi,+919687120000,aadi.modi@mail.com,buy,apartment,3,4000000,6000000,INR,"Satellite, Vastrapur",Immediate
+Aarini Sandal,9750333832,aarini.s@mail.com,buy,villa,4,12000000,18000000,INR,"Bopal, Shela",3 Months
+Aarush Choudhary,8989586868,aarush.c@mail.com,rent,apartment,2,15000,25000,INR,"Ghatlodia, Naranpura",Immediate
+Aditya Chaudhuri,+919902111222,aditya.c@mail.com,buy,apartment,3,8000000,12000000,INR,"Satellite, Prahlad Nagar",1 Month
+Anvi Bala,09348348348,anvi.b@mail.com,rent,apartment,3,25000,35000,INR,"Bodakdev, Satellite",Immediate
