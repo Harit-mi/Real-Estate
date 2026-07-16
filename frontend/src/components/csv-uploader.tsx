@@ -141,15 +141,19 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
   };
 
   return (
-    <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem", marginBottom: "2rem" }}>
-      <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        <FileSpreadsheet size={20} color="#000000" />
-        Smart Lead CSV Ingestion
+    <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", marginBottom: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)", position: "relative" }}>
+      <div style={{ position: "absolute", top: "1rem", right: "2rem", border: "2px dashed var(--color-thread)", color: "var(--color-thread)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", fontWeight: 700, padding: "0.25rem 0.5rem", transform: "rotate(4deg)" }}>
+        [ INCOMING_DOSSIER_INTAKE ]
+      </div>
+
+      <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+        <FileSpreadsheet size={20} color="var(--color-navy)" />
+        BULK DOSSIER CSV INGESTION
       </h2>
       
       {/* File Upload Zone */}
       {!headers.length && !importResult && (
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "1rem", alignItems: "center", backgroundColor: "rgba(255,255,255,0.4)", padding: "1.5rem", borderRadius: "4px", border: "1px dashed rgba(23,50,77,0.3)" }}>
           <input
             type="file"
             accept=".csv"
@@ -160,20 +164,20 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
           <label
             htmlFor="csv-file-input"
             className="btn btn-secondary"
-            style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem", borderRadius: "8px", display: "inline-flex", gap: "0.5rem", alignItems: "center" }}
+            style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem", display: "inline-flex", gap: "0.5rem", alignItems: "center" }}
           >
             <Upload size={16} />
-            {file ? file.name : "Select Lead CSV File"}
+            {file ? file.name : "Select Lead CSV Document File"}
           </label>
           
           {file && (
             <button
               onClick={handleUpload}
               className="btn btn-primary"
-              style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem", borderRadius: "8px" }}
+              style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem" }}
               disabled={uploading}
             >
-              {uploading ? <Loader2 size={16} className="animate-spin" /> : "Upload & Map"}
+              {uploading ? <Loader2 size={16} className="animate-spin" /> : "Unseal & Match"}
             </button>
           )}
         </div>
@@ -181,7 +185,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
 
       {/* Success Notification */}
       {importResult && (
-        <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius-md)", padding: "1.25rem 1.5rem", color: "var(--text-main)", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius-sm)", padding: "1.25rem 1.5rem", color: "var(--text-main)", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700, color: "#166534" }}>
             <Check size={18} color="#166534" />
             CSV Import Completed Successfully!
@@ -192,7 +196,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
           </p>
           <button 
             className="btn btn-secondary" 
-            style={{ alignSelf: "flex-start", padding: "0.4rem 0.8rem", fontSize: "0.8rem", marginTop: "0.5rem", borderRadius: "6px" }}
+            style={{ alignSelf: "flex-start", padding: "0.4rem 0.8rem", fontSize: "0.8rem", marginTop: "0.5rem" }}
             onClick={() => setImportResult(null)}
           >
             Upload Another File
@@ -203,7 +207,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
       {/* Mapping Editor */}
       {headers.length > 0 && (
         <div style={{ marginTop: "1rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#000000", fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-navy)", fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem", fontFamily: "var(--font-display)" }}>
             <AlertCircle size={16} />
             Map CSV Columns to PropMatch Fields
           </div>
@@ -219,13 +223,15 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
               {fields.map((f) => (
                 <tr key={f.key}>
                   <td>
-                    <span style={{ fontWeight: 600, fontSize: "0.85rem" }}>{f.label}</span>
-                    {f.required && <span style={{ color: "var(--color-danger)", marginLeft: "0.25rem" }}>*</span>}
+                    <span style={{ fontWeight: 600, fontSize: "0.85rem", fontFamily: "var(--font-sans)", color: "var(--color-navy)" }}>{f.label}</span>
+                    {f.required && <span style={{ color: "var(--color-thread)", marginLeft: "0.25rem" }}>*</span>}
                   </td>
                   <td>
                     <select
                       value={mapping[f.key] || ""}
                       onChange={(e) => handleMappingChange(f.key, e.target.value)}
+                      className="form-control"
+                      style={{ padding: "0.25rem 0.5rem", fontSize: "0.85rem", fontFamily: "var(--font-mono)", width: "200px" }}
                     >
                       <option value="">-- Do Not Import --</option>
                       {headers.map((h) => (
@@ -244,7 +250,6 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
             <button
               onClick={handleImport}
               className="btn btn-primary"
-              style={{ borderRadius: "8px" }}
               disabled={importing}
             >
               {importing ? (
@@ -262,7 +267,6 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
                 setFile(null);
               }}
               className="btn btn-secondary"
-              style={{ borderRadius: "8px" }}
             >
               Cancel
             </button>

@@ -376,26 +376,34 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
               </h3>
               
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                {selectedDeal.dealProperties.map((dp) => {
-                  const p = dp.property;
-                  const isRejected = dp.status === "rejected";
-                  const isWon = dp.status === "won";
-                  
-                  return (
-                    <div 
-                      key={dp.id} 
-                      style={{ 
-                        padding: "1.25rem", 
-                        backgroundColor: "var(--bg-card)",
-                        borderRadius: "var(--radius-md)",
-                        border: "1px solid var(--border-color)",
-                        borderLeft: isWon 
-                          ? "4px solid var(--color-success)" 
-                          : isRejected 
-                          ? "4px solid var(--color-danger)" 
-                          : "1px solid var(--border-color)" 
-                      }}
-                    >
+                {(() => {
+                  const hasWonProperty = selectedDeal.dealProperties.some(dp => dp.status === "won");
+                  return selectedDeal.dealProperties.map((dp) => {
+                    const p = dp.property;
+                    const isRejected = dp.status === "rejected";
+                    const isWon = dp.status === "won";
+                    const showClosedStamp = hasWonProperty && !isWon;
+                    const showWonStamp = isWon;
+                    
+                    return (
+                      <div 
+                        key={dp.id} 
+                        style={{ 
+                          padding: "1.25rem", 
+                          backgroundColor: "var(--bg-card)",
+                          borderRadius: "var(--radius-md)",
+                          border: "1px solid var(--border-color)",
+                          position: "relative",
+                          overflow: "hidden",
+                          borderLeft: isWon 
+                            ? "4px solid var(--color-success)" 
+                            : isRejected 
+                            ? "4px solid var(--color-danger)" 
+                            : "1px solid var(--border-color)" 
+                        }}
+                      >
+                        {showWonStamp && <div className="ink-stamp won">WON</div>}
+                        {showClosedStamp && <div className="ink-stamp closed">CLOSED</div>}
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                         <h4 style={{ fontSize: "0.95rem", fontWeight: 700 }}>{p.title}</h4>
                         <span className="match-badge" style={{ marginTop: 0 }}>
@@ -479,7 +487,8 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                       )}
                     </div>
                   );
-                })}
+                });
+              })()}
               </div>
             </div>
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { 
   Building2, Users, LayoutDashboard, FileSpreadsheet, 
   RefreshCw, Calendar, BarChart3, CreditCard,
-  FileText, Award, Mail, Smartphone
+  FileText, Award, Mail, Smartphone, Lock
 } from "lucide-react";
 import Dashboard from "./components/dashboard";
 import KanbanBoard from "./components/kanban-board";
@@ -30,6 +30,21 @@ function App() {
     phone: string;
     dealId: string;
   } | null>(null);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem("case_auth") === "true";
+  });
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    localStorage.setItem("case_auth", "true");
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("case_auth");
+    setIsAuthenticated(false);
+  };
 
   // Initialize DB seed on start
   useEffect(() => {
@@ -60,6 +75,42 @@ function App() {
   const handleDealSelectedForPhone = (name: string, phone: string, dealId: string) => {
     setSelectedPhoneContact({ name, phone, dealId });
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="case-file-auth-overlay">
+        <form className="case-file-folder" onSubmit={handleLogin}>
+          <h2>UNSEAL CASE FILE DOSSIER</h2>
+          <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: "1.5rem", fontStyle: "italic" }}>
+            PropMatch AI Intelligence Desk Ingest
+          </p>
+          <div className="form-group">
+            <label>Agent Email Address</label>
+            <input 
+              type="email" 
+              required 
+              className="form-control" 
+              defaultValue="harit.mishra@propmatch.ai" 
+              placeholder="agent@propmatch.ai"
+            />
+          </div>
+          <div className="form-group">
+            <label>Dossier Access Key</label>
+            <input 
+              type="password" 
+              required 
+              className="form-control" 
+              defaultValue="PM-8751-2026" 
+              placeholder="••••••••••••"
+            />
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ marginTop: "1rem" }}>
+            OPEN CASE FILE
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
@@ -156,6 +207,13 @@ function App() {
             data-tooltip={seeding ? "Activating Org..." : `Sync CRM Core (${tenantName})`}
           >
             <RefreshCw size={18} className={seeding ? "animate-spin" : ""} />
+          </div>
+          <div 
+            className="nav-item" 
+            onClick={handleLogout} 
+            data-tooltip="Lock Case File"
+          >
+            <Lock size={18} />
           </div>
         </div>
       </div>
