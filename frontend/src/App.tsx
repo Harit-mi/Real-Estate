@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import { 
-  Building2, Users, LayoutDashboard, FileSpreadsheet, 
-  RefreshCw, Calendar, BarChart3, CreditCard,
-  FileText, Award, Mail, Smartphone, Lock
-} from "lucide-react";
+// Using FontAwesome icons globally via CDN
 import Dashboard from "./components/dashboard";
 import KanbanBoard from "./components/kanban-board";
 import CSVUploader from "./components/csv-uploader";
@@ -126,77 +122,77 @@ function App() {
             onClick={() => setActiveTab("dashboard")}
             data-tooltip="Dashboard"
           >
-            <LayoutDashboard size={20} />
+            <i className="fa-solid fa-gauge-high" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "pipeline" ? "active" : ""}`}
             onClick={() => setActiveTab("pipeline")}
             data-tooltip="Sales Pipeline"
           >
-            <Users size={20} />
+            <i className="fa-solid fa-users" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "csv-ingest" ? "active" : ""}`}
             onClick={() => setActiveTab("csv-ingest")}
             data-tooltip="CSV Lead Ingest"
           >
-            <FileSpreadsheet size={20} />
+            <i className="fa-solid fa-file-csv" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "properties" ? "active" : ""}`}
             onClick={() => setActiveTab("properties")}
             data-tooltip="Property Inventory"
           >
-            <Building2 size={20} />
+            <i className="fa-solid fa-building" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "tasks" ? "active" : ""}`}
             onClick={() => setActiveTab("tasks")}
             data-tooltip="Task Schedule"
           >
-            <Calendar size={20} />
+            <i className="fa-solid fa-calendar-days" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "analytics" ? "active" : ""}`}
             onClick={() => setActiveTab("analytics")}
             data-tooltip="CRM Analytics"
           >
-            <BarChart3 size={20} />
+            <i className="fa-solid fa-chart-line" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "billing" ? "active" : ""}`}
             onClick={() => setActiveTab("billing")}
             data-tooltip="Paddle Billing"
           >
-            <CreditCard size={20} />
+            <i className="fa-solid fa-credit-card" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "documents" ? "active" : ""}`}
             onClick={() => setActiveTab("documents")}
             data-tooltip="Document Hub"
           >
-            <FileText size={20} />
+            <i className="fa-solid fa-file-contract" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "team" ? "active" : ""}`}
             onClick={() => setActiveTab("team")}
             data-tooltip="Team Leaderboard"
           >
-            <Award size={20} />
+            <i className="fa-solid fa-trophy" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "campaigns" ? "active" : ""}`}
             onClick={() => setActiveTab("campaigns")}
             data-tooltip="Email Campaigns"
           >
-            <Mail size={20} />
+            <i className="fa-solid fa-envelope" style={{ fontSize: '18px' }}></i>
           </div>
           <div
             className={`nav-item ${activeTab === "portal" ? "active" : ""}`}
             onClick={() => setActiveTab("portal")}
             data-tooltip="Client Portal Simulator"
           >
-            <Smartphone size={20} />
+            <i className="fa-solid fa-mobile-screen-button" style={{ fontSize: '18px' }}></i>
           </div>
         </div>
 
@@ -206,14 +202,14 @@ function App() {
             onClick={triggerRefresh} 
             data-tooltip={seeding ? "Activating Org..." : `Sync CRM Core (${tenantName})`}
           >
-            <RefreshCw size={18} className={seeding ? "animate-spin" : ""} />
+            <i className={`fa-solid fa-rotate ${seeding ? "fa-spin" : ""}`} style={{ fontSize: '16px' }}></i>
           </div>
           <div 
             className="nav-item" 
             onClick={handleLogout} 
             data-tooltip="Lock Case File"
           >
-            <Lock size={18} />
+            <i className="fa-solid fa-lock" style={{ fontSize: '16px' }}></i>
           </div>
         </div>
       </div>

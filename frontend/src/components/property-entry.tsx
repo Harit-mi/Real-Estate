@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Building2, Landmark, CheckCircle2 } from "lucide-react";
+// FontAwesome free icons used via CDN link in index.html
 
 interface Property {
   id: string;
@@ -125,13 +125,13 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
       {/* Property Input Form - Styled like a Manila Case file folder */}
       <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
         <h2 style={{ fontSize: "1.20rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
-          <Building2 size={20} color="var(--color-navy)" />
+          <i className="fa-solid fa-building" style={{ fontSize: '20px', color: 'var(--color-navy)', marginRight: '0.5rem' }}></i>
           NEW PROPERTY DOSSIER INGEST
         </h2>
 
         {matchResult && (
           <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius-sm)", padding: "1.25rem", color: "#166534", marginBottom: "1.5rem", display: "flex", gap: "0.75rem" }}>
-            <CheckCircle2 size={24} color="#166534" style={{ flexShrink: 0 }} />
+            <i className="fa-solid fa-circle-check" style={{ fontSize: '24px', color: '#166534', marginRight: '0.75rem', flexShrink: 0 }}></i>
             <div>
               <div style={{ fontWeight: 700 }}>Property Logged & Scored!</div>
               <p style={{ fontSize: "0.85rem", color: "#166534", marginTop: "0.25rem", fontWeight: 500 }}>
@@ -258,7 +258,7 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
       {/* Property Inventory List - Styled like a Blueprint spec file layout */}
       <div style={{ backgroundColor: "var(--color-navy)", border: "2px solid var(--color-cyan)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", maxHeight: "600px", boxShadow: "2px 4px 10px rgba(0,0,0,0.3)" }}>
         <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-cyan)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(94,194,224,0.3)", paddingBottom: "0.5rem" }}>
-          <Building2 size={20} color="var(--color-cyan)" />
+          <i className="fa-solid fa-building" style={{ fontSize: '20px', color: 'var(--color-cyan)', marginRight: '0.5rem' }}></i>
           ACTIVE BLUEPRINT INVENTORY ({properties.length})
         </h2>
 
@@ -304,7 +304,7 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
             })}
             {properties.length === 0 && (
               <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-cyan)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)" }}>
-                <Landmark size={40} />
+                <i className="fa-solid fa-landmark" style={{ fontSize: '40px', marginBottom: '0.5rem' }}></i>
                 No properties in inventory database index files.
               </div>
             )}

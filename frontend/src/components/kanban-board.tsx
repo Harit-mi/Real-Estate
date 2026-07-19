@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import { 
-  X, Send, Check, FileText, 
-  ThumbsDown, Sparkles, Building,
-  Calendar
-} from "lucide-react";
+// FontAwesome free icons package used via CDN
 
 interface Contact {
   id: string;
@@ -300,7 +296,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
 
                         {bestMatch > 0 && (
                           <div className="match-badge">
-                            <Sparkles size={10} style={{ fill: "#ffffff" }} />
+                            <i className="fa-solid fa-star" style={{ fontSize: '10px', color: '#ffffff', marginRight: '0.25rem' }}></i>
                             Best Match: {bestMatch}%
                           </div>
                         )}
@@ -334,7 +330,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                   Active Smart Deal · Agent: {selectedDeal.ownerAgent.name}
                 </p>
               </div>
-              <X className="panel-close" onClick={() => setSelectedDeal(null)} size={20} />
+              <i className="fa-solid fa-xmark panel-close" onClick={() => setSelectedDeal(null)} style={{ fontSize: '20px', cursor: 'pointer' }}></i>
             </div>
 
             {/* Profile Info */}
@@ -371,7 +367,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
             {/* Multi-Property Deal Match Workspace */}
             <div style={{ marginBottom: "2rem" }}>
               <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <Building size={18} color="var(--text-main)" />
+                <i className="fa-solid fa-building" style={{ fontSize: '18px', color: 'var(--text-main)', marginRight: '0.5rem' }}></i>
                 Properties Under Consideration ({selectedDeal.dealProperties.length})
               </h3>
               
@@ -434,7 +430,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                           className={`btn ${dp.status === "visited" ? "btn-primary" : "btn-secondary"}`}
                           style={{ padding: "0.4rem 0.8rem", fontSize: "0.75rem", borderRadius: "8px" }}
                         >
-                          <Calendar size={12} style={{ marginRight: "0.25rem" }} />
+                          <i className="fa-solid fa-calendar-days" style={{ fontSize: '12px', marginRight: '0.25rem' }}></i>
                           Visited
                         </button>
                         
@@ -444,7 +440,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                             className="btn btn-secondary"
                             style={{ padding: "0.4rem 0.8rem", fontSize: "0.75rem", borderRadius: "8px", borderColor: "rgba(239, 68, 68, 0.4)" }}
                           >
-                            <ThumbsDown size={12} color="var(--color-danger)" style={{ marginRight: "0.25rem" }} />
+                            <i className="fa-solid fa-thumbs-down" style={{ fontSize: '12px', color: 'var(--color-danger)', marginRight: '0.25rem' }}></i>
                             Reject
                           </button>
                         )}
@@ -459,7 +455,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                             className="btn btn-secondary"
                             style={{ padding: "0.4rem 0.8rem", fontSize: "0.75rem", borderRadius: "8px", borderColor: "rgba(16, 185, 129, 0.4)" }}
                           >
-                            <Check size={12} color="var(--color-success)" style={{ marginRight: "0.25rem" }} />
+                            <i className="fa-solid fa-check" style={{ fontSize: '12px', color: 'var(--color-success)', marginRight: '0.25rem' }}></i>
                             Mark Won
                           </button>
                         )}
@@ -495,7 +491,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
             {/* Timeline Notes */}
             <div>
               <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <FileText size={18} color="var(--text-main)" />
+                <i className="fa-solid fa-file-contract" style={{ fontSize: '18px', color: 'var(--text-main)', marginRight: '0.5rem' }}></i>
                 Timeline & Timeline Notes
               </h3>
 
@@ -510,7 +506,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                   onChange={(e) => setNoteContent(e.target.value)}
                 />
                 <button type="submit" className="btn btn-primary" style={{ borderRadius: "8px" }}>
-                  <Send size={16} />
+                  <i className="fa-solid fa-paper-plane" style={{ fontSize: '16px' }}></i>
                 </button>
               </form>
 

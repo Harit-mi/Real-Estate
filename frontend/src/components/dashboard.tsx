@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { 
-  Send, CheckCircle, Info, RefreshCw
-} from "lucide-react";
+// Using FontAwesome icons globally via CDN
 
 interface DashboardProps {
   backendUrl: string;
@@ -550,18 +548,18 @@ export default function Dashboard({ backendUrl, refreshTrigger }: DashboardProps
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.8rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <CheckCircle size={14} color="#1e6b36" />
+                    <i className="fa-solid fa-circle-check" style={{ color: '#1e6b36', fontSize: '14px' }}></i>
                     <span>Transaction Model Consistency (Pass)</span>
                   </div>
                   {activeMatch.reasons.length === 0 ? (
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle size={14} color="#1e6b36" />
+                      <i className="fa-solid fa-circle-check" style={{ color: '#1e6b36', fontSize: '14px' }}></i>
                       <span>Perfect matching coordinates (Budget, Location, Size)</span>
                     </div>
                   ) : (
                     activeMatch.reasons.map((r, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "rgba(0,0,0,0.7)" }}>
-                        <Info size={14} color="var(--color-thread)" />
+                        <i className="fa-solid fa-circle-info" style={{ color: 'var(--color-thread)', fontSize: '14px' }}></i>
                         <span>{r}</span>
                       </div>
                     ))
@@ -604,9 +602,9 @@ export default function Dashboard({ backendUrl, refreshTrigger }: DashboardProps
                     disabled={isAlerting}
                   >
                     {isAlerting ? (
-                      <RefreshCw size={18} className="animate-spin" />
+                      <i className="fa-solid fa-rotate fa-spin" style={{ fontSize: '18px' }}></i>
                     ) : (
-                      <Send size={18} />
+                      <i className="fa-solid fa-paper-plane" style={{ fontSize: '18px' }}></i>
                     )}
                     TRIGGER WHATSAPP NOTIFICATION
                   </button>

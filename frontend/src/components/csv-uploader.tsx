@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, Check, AlertCircle, FileSpreadsheet, Loader2 } from "lucide-react";
+// FontAwesome free icons package used via CDN link in index.html
 
 interface CSVUploaderProps {
   backendUrl: string;
@@ -147,7 +147,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
       </div>
 
       <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
-        <FileSpreadsheet size={20} color="var(--color-navy)" />
+        <i className="fa-solid fa-file-csv" style={{ fontSize: '20px', color: 'var(--color-navy)', marginRight: '0.5rem' }}></i>
         BULK DOSSIER CSV INGESTION
       </h2>
       
@@ -166,7 +166,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
             className="btn btn-secondary"
             style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem", display: "inline-flex", gap: "0.5rem", alignItems: "center" }}
           >
-            <Upload size={16} />
+            <i className="fa-solid fa-upload" style={{ fontSize: '16px', marginRight: '0.5rem' }}></i>
             {file ? file.name : "Select Lead CSV Document File"}
           </label>
           
@@ -177,7 +177,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
               style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem" }}
               disabled={uploading}
             >
-              {uploading ? <Loader2 size={16} className="animate-spin" /> : "Unseal & Match"}
+              {uploading ? <i className="fa-solid fa-rotate fa-spin" style={{ fontSize: '16px' }}></i> : "Unseal & Match"}
             </button>
           )}
         </div>
@@ -187,7 +187,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
       {importResult && (
         <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "var(--radius-sm)", padding: "1.25rem 1.5rem", color: "var(--text-main)", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700, color: "#166534" }}>
-            <Check size={18} color="#166534" />
+            <i className="fa-solid fa-circle-check" style={{ fontSize: '18px', color: '#166534', marginRight: '0.5rem' }}></i>
             CSV Import Completed Successfully!
           </div>
           <p style={{ fontSize: "0.85rem", color: "#166534", fontWeight: 500 }}>
@@ -208,7 +208,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
       {headers.length > 0 && (
         <div style={{ marginTop: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-navy)", fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem", fontFamily: "var(--font-display)" }}>
-            <AlertCircle size={16} />
+            <i className="fa-solid fa-circle-exclamation" style={{ fontSize: '16px', marginRight: '0.5rem' }}></i>
             Map CSV Columns to PropMatch Fields
           </div>
           
@@ -254,7 +254,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
             >
               {importing ? (
                 <>
-                  <Loader2 size={16} className="animate-spin" />
+                  <i className="fa-solid fa-rotate fa-spin" style={{ fontSize: '16px', marginRight: '0.5rem' }}></i>
                   Importing & Running Matcher...
                 </>
               ) : (
