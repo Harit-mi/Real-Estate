@@ -581,11 +581,15 @@ app.post("/api/csv/import", async (req, res) => {
       return res.status(400).json({ error: "Missing filePath or mapping configuration" });
     }
 
-    if (!fs.existsSync(filePath)) {
+    // SEC-01 Path Traversal Mitigation: Strip directory segments and restrict to uploadDir
+    const safeFileName = path.basename(filePath);
+    const resolvedPath = path.join(uploadDir, safeFileName);
+
+    if (!fs.existsSync(resolvedPath)) {
       return res.status(404).json({ error: "Uploaded CSV file not found on disk" });
     }
 
-    const parsedLeads = await parseCSVWithMapping(filePath, mapping as ColumnMapping);
+    const parsedLeads = await parseCSVWithMapping(resolvedPath, mapping as ColumnMapping);
 
     let importCount = 0;
     let matchesTriggered = 0;
@@ -636,7 +640,7 @@ app.post("/api/csv/import", async (req, res) => {
 
     // Clean up file from disk
     try {
-      fs.unlinkSync(filePath);
+      fs.unlinkSync(resolvedPath);
     } catch (e) {
       // Ignored
     }
