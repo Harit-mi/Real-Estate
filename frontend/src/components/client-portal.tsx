@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { ThumbsUp, ThumbsDown, Eye, Smartphone, AlertCircle } from "lucide-react";
 
 interface Contact {
   name: string;
@@ -90,13 +89,13 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "2.5rem" }}>
       
-      {/* Left Column: Portal Simulator Settings */}
+      {/* Left Column: Portal Simulator Settings - Styled like Manila Dossier */}
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         
-        <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem" }}>
-          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Eye size={18} color="#000000" />
-            Portal Link Simulator
+        <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+            <i className="fa-solid fa-eye" style={{ color: "var(--color-navy)" }}></i>
+            PORTAL LINK SIMULATOR
           </h2>
           <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: "1.5rem", fontWeight: 500 }}>
             Simulate a client opening their private property recommendation portal. Select a client from your pipeline below:
@@ -106,7 +105,6 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
             <label>Load Portal Client Profile</label>
             <select 
               className="form-control"
-              style={{ borderRadius: "8px" }}
               value={selectedDealId}
               onChange={(e) => setSelectedDealId(e.target.value)}
             >
@@ -118,8 +116,8 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
             </select>
           </div>
 
-          <div style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", padding: "1.25rem", borderRadius: "12px", fontSize: "0.8rem", color: "var(--text-muted)", lineHeight: "1.5", fontWeight: 500 }}>
-            <strong>How to test this live:</strong> Swiping shortlist (Thumbs Up) or reject (Thumbs Down) inside the phone screen on the right will immediately update the database and push logs into the CRM Sales Pipeline tab timeline.
+          <div style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px dashed rgba(23,50,77,0.2)", padding: "1.25rem", borderRadius: "4px", fontSize: "0.8rem", color: "var(--color-navy)", lineHeight: "1.5" }}>
+            <strong>Testing Guidelines:</strong> Shortlisting (Thumbs Up) or rejecting (Thumbs Down) inside the phone screen on the right updates the database instantly and logs a timeline event in the CRM Sales Pipeline.
           </div>
         </div>
 
@@ -134,8 +132,8 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
             height: "640px", 
             border: "12px solid #0a0a0a", 
             borderRadius: "40px", 
-            boxShadow: "0 25px 60px rgba(0,0,0,0.15)",
-            backgroundColor: "#f9fafb",
+            boxShadow: "0 25px 60px rgba(0,0,0,0.3)",
+            backgroundColor: "var(--color-chalk)",
             position: "relative",
             display: "flex",
             flexDirection: "column",
@@ -149,8 +147,8 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
           <div 
             style={{ 
               padding: "1.5rem 1.25rem 1rem", 
-              backgroundColor: "#ffffff", 
-              borderBottom: "1px solid #e5e7eb", 
+              backgroundColor: "var(--color-manila)", 
+              borderBottom: "2px solid var(--color-navy)", 
               display: "flex", 
               alignItems: "center", 
               justifyContent: "space-between",
@@ -158,13 +156,13 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
             }}
           >
             <div>
-              <span style={{ fontSize: "0.6rem", color: "#9ca3af", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px" }}>Client Portal Feed</span>
-              <h3 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#111827" }}>
+              <span style={{ fontSize: "0.6rem", color: "var(--color-thread)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", fontFamily: "var(--font-mono)" }}>CLIENT PORTAL FEED</span>
+              <h3 style={{ fontSize: "0.95rem", fontWeight: 800, color: "var(--color-navy)", fontFamily: "var(--font-display)" }}>
                 {activeDeal ? activeDeal.requirement.contact.name : "Client Portal"}
               </h3>
             </div>
             
-            <Smartphone size={16} color="#9ca3af" />
+            <i className="fa-solid fa-mobile-screen-button" style={{ color: "var(--color-navy)", fontSize: "16px" }}></i>
           </div>
 
           {/* Smartphone Scrollable Feed */}
@@ -187,19 +185,19 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                     key={property.id}
                     style={{ 
                       backgroundColor: "#ffffff", 
-                      border: "1px solid #e5e7eb", 
-                      borderRadius: "16px",
+                      border: "1px solid rgba(23,50,77,0.15)", 
+                      borderRadius: "4px",
                       padding: "1rem",
                       display: "flex",
                       flexDirection: "column",
                       gap: "0.75rem",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.01)"
+                      boxShadow: "2px 2px 8px rgba(0,0,0,0.03)"
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "#111827" }}>{property.title}</div>
-                      <div style={{ fontSize: "0.7rem", color: "#6b7280", marginTop: "0.15rem" }}>{property.location} · {property.bedrooms} BHK</div>
-                      <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "#111827", marginTop: "0.35rem" }}>
+                      <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "var(--color-navy)" }}>{property.title}</div>
+                      <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "0.15rem", fontFamily: "var(--font-sans)" }}>{property.location} · {property.bedrooms} BHK</div>
+                      <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "var(--color-thread)", marginTop: "0.35rem", fontFamily: "var(--font-mono)" }}>
                         {property.currency} {property.price.toLocaleString()}
                       </div>
                     </div>
@@ -209,15 +207,15 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                         style={{ 
                           textAlign: "center", 
                           padding: "0.5rem", 
-                          borderRadius: "8px", 
+                          borderRadius: "4px", 
                           fontSize: "0.75rem", 
                           fontWeight: 700,
-                          backgroundColor: status === "shortlisted" ? "#f0fdf4" : "#fef2f2",
-                          color: status === "shortlisted" ? "#16a34a" : "#dc2626",
-                          border: status === "shortlisted" ? "1px solid #bbf7d0" : "1px solid #fecaca"
+                          backgroundColor: status === "shortlisted" ? "#e2f2e6" : "#fef2f2",
+                          color: status === "shortlisted" ? "#1e6b36" : "#dc2626",
+                          border: status === "shortlisted" ? "1px solid #1e6b36" : "1px solid #fecaca"
                         }}
                       >
-                        {status === "shortlisted" ? "Shortlisted!" : "Rejected"}
+                        {status === "shortlisted" ? "✓ Shortlisted!" : "✗ Rejected"}
                       </div>
                     ) : (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -225,7 +223,7 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                           type="text" 
                           placeholder="Leave feedback comment (optional)..."
                           className="form-control"
-                          style={{ borderRadius: "8px", padding: "0.35rem 0.65rem", fontSize: "0.75rem", height: "auto" }}
+                          style={{ padding: "0.35rem 0.65rem", fontSize: "0.75rem", height: "auto" }}
                           value={feedbackComment}
                           onChange={(e) => setFeedbackComment(e.target.value)}
                         />
@@ -241,7 +239,7 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                               gap: "0.25rem",
                               backgroundColor: "#fef2f2", 
                               border: "1px solid #fecaca", 
-                              borderRadius: "8px", 
+                              borderRadius: "4px", 
                               color: "#dc2626", 
                               fontSize: "0.7rem", 
                               fontWeight: 700, 
@@ -249,7 +247,7 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                               cursor: "pointer" 
                             }}
                           >
-                            <ThumbsDown size={12} />
+                            <i className="fa-solid fa-thumbs-down" style={{ fontSize: "11px" }}></i>
                             Reject
                           </button>
                           
@@ -261,17 +259,17 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                               alignItems: "center", 
                               justifyContent: "center", 
                               gap: "0.25rem",
-                              backgroundColor: "#f0fdf4", 
+                              backgroundColor: "#e2f2e6", 
                               border: "1px solid #bbf7d0", 
-                              borderRadius: "8px", 
-                              color: "#16a34a", 
+                              borderRadius: "4px", 
+                              color: "#1e6b36", 
                               fontSize: "0.7rem", 
                               fontWeight: 700, 
                               padding: "0.4rem", 
                               cursor: "pointer" 
                             }}
                           >
-                            <ThumbsUp size={12} />
+                            <i className="fa-solid fa-thumbs-up" style={{ fontSize: "11px" }}></i>
                             Shortlist
                           </button>
                         </div>
@@ -281,8 +279,8 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                 );
               })
             ) : (
-              <div style={{ margin: "auto", textAlign: "center", padding: "2rem", color: "#9ca3af", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-                <AlertCircle size={28} />
+              <div style={{ margin: "auto", textAlign: "center", padding: "2rem", color: "var(--text-muted)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)" }}>
+                <i className="fa-solid fa-circle-info" style={{ fontSize: "24px" }}></i>
                 <p style={{ fontSize: "0.75rem", fontWeight: 600 }}>No property recommendations uploaded for this contact.</p>
               </div>
             )}

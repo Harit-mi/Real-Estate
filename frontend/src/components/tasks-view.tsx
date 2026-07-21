@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Clock, Calendar, Check, Plus, AlertCircle } from "lucide-react";
 
 interface Contact {
   id: string;
@@ -129,16 +128,16 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "2rem" }}>
       
-      {/* Left side: Task Scheduler List */}
-      <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem", display: "flex", flexDirection: "column" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <Clock size={18} color="#000000" />
-          Agent Schedule Checklist ({tasks.filter(t => t.status === "pending").length})
+      {/* Left side: Task Scheduler List - Styled like a physical Case Log Book */}
+      <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
+        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+          <i className="fa-solid fa-clock" style={{ color: "var(--color-navy)" }}></i>
+          CASE LOG SCHEDULE ({tasks.filter(t => t.status === "pending").length} PENDING)
         </h2>
 
         {loading && tasks.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontWeight: 600 }}>
-            Loading checklist...
+          <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
+            Loading file checklist...
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", overflowY: "auto", maxHeight: "400px" }}>
@@ -156,9 +155,9 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
                   key={task.id} 
                   style={{ 
                     padding: "1rem", 
-                    backgroundColor: isCompleted ? "var(--bg-app)" : "var(--bg-card)",
-                    border: "1px solid var(--border-color)", 
-                    borderRadius: "12px",
+                    backgroundColor: isCompleted ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.7)",
+                    border: "1px solid rgba(23,50,77,0.15)", 
+                    borderRadius: "4px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
@@ -167,21 +166,21 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexGrow: 1 }}>
-                    {/* Checkbox */}
+                    {/* Tick Checkbox */}
                     <div 
                       onClick={() => handleToggleStatus(task.id, task.status)}
                       style={{ 
                         width: "22px", 
                         height: "22px", 
-                        borderRadius: "6px", 
-                        border: "2px solid #000000", 
+                        borderRadius: "4px", 
+                        border: "2px solid var(--color-navy)", 
                         display: "grid", 
                         placeItems: "center", 
                         cursor: "pointer",
-                        backgroundColor: isCompleted ? "#000000" : "transparent"
+                        backgroundColor: isCompleted ? "var(--color-navy)" : "transparent"
                       }}
                     >
-                      {isCompleted && <Check size={14} color="#ffffff" strokeWidth={3} />}
+                      {isCompleted && <i className="fa-solid fa-check" style={{ color: "#ffffff", fontSize: "12px" }}></i>}
                     </div>
 
                     <div>
@@ -189,16 +188,17 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
                         style={{ 
                           fontSize: "0.85rem", 
                           fontWeight: 700, 
+                          color: "var(--color-navy)",
                           textDecoration: isCompleted ? "line-through" : "none" 
                         }}
                       >
                         {task.title}
                       </div>
-                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.2rem", fontWeight: 500 }}>
-                        <Calendar size={12} />
+                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.2rem", fontFamily: "var(--font-mono)", fontWeight: 500 }}>
+                        <i className="fa-solid fa-calendar-days"></i>
                         {taskDate}
                         {task.contact && (
-                          <span style={{ color: "#000000", fontWeight: 700 }}>
+                          <span style={{ color: "var(--color-thread)", fontWeight: 700 }}>
                             · Client: {task.contact.name}
                           </span>
                         )}
@@ -212,7 +212,7 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
                       fontSize: "0.65rem", 
                       fontWeight: 700, 
                       padding: "0.2rem 0.5rem", 
-                      borderRadius: "6px",
+                      borderRadius: "4px",
                       backgroundColor: task.type === "visit" ? "#f3e8ff" : task.type === "call" ? "#fef3c7" : "#e0f2fe",
                       color: task.type === "visit" ? "#7c3aed" : task.type === "call" ? "#d97706" : "#0284c7"
                     }}
@@ -224,30 +224,29 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
             })}
 
             {tasks.length === 0 && (
-              <div style={{ textAlign: "center", padding: "3rem", color: "var(--text-light)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontWeight: 600 }}>
-                <AlertCircle size={36} />
-                No scheduled activities today. Use form to create tasks!
+              <div style={{ textAlign: "center", padding: "3rem", color: "var(--text-muted)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)" }}>
+                <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: "30px", marginBottom: "0.5rem" }}></i>
+                No scheduled activities logged. Use form to draft events.
               </div>
             )}
           </div>
         )}
       </div>
 
-      {/* Right side: Add Task Form */}
-      <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <Plus size={18} color="#000000" />
-          Schedule Event
+      {/* Right side: Add Task Form - Styled like Blueprint Ingest */}
+      <div style={{ backgroundColor: "var(--color-navy)", border: "2px solid var(--color-cyan)", borderRadius: "var(--radius-sm)", padding: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.3)" }}>
+        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-cyan)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(94,194,224,0.3)", paddingBottom: "0.5rem" }}>
+          <i className="fa-solid fa-calendar-plus" style={{ color: "var(--color-cyan)" }}></i>
+          SCHEDULE AGENDA EVENT
         </h2>
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label>Task Title *</label>
+            <label style={{ color: "var(--color-cyan)" }}>Task Title *</label>
             <input 
               type="text" 
               placeholder="e.g. Satellite highrise site tour" 
               className="form-control"
-              style={{ borderRadius: "8px" }}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -256,10 +255,9 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <label>Task Type</label>
+              <label style={{ color: "var(--color-cyan)" }}>Task Type</label>
               <select 
                 className="form-control" 
-                style={{ borderRadius: "8px" }}
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
@@ -270,10 +268,9 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
             </div>
             
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <label>Linked Deal / Client</label>
+              <label style={{ color: "var(--color-cyan)" }}>Linked Deal / Client</label>
               <select 
                 className="form-control" 
-                style={{ borderRadius: "8px" }}
                 value={dealId}
                 onChange={(e) => setDealId(e.target.value)}
               >
@@ -288,11 +285,10 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
           </div>
 
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label>Event Date & Time *</label>
+            <label style={{ color: "var(--color-cyan)" }}>Event Date & Time *</label>
             <input 
               type="datetime-local" 
               className="form-control"
-              style={{ borderRadius: "8px" }}
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
@@ -302,7 +298,7 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
           <button 
             type="submit" 
             className="btn btn-primary"
-            style={{ width: "100%", marginTop: "0.5rem", borderRadius: "8px", padding: "0.8rem" }}
+            style={{ width: "100%", marginTop: "0.5rem", padding: "0.8rem" }}
             disabled={submitting}
           >
             {submitting ? "Scheduling..." : "Schedule Event"}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { MapPin, Building, Sparkles } from "lucide-react";
 
 interface Property {
   id: string;
@@ -58,37 +57,37 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
   };
 
   return (
-    <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+    <div style={{ backgroundColor: "var(--color-navy)", border: "2px solid var(--color-cyan)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.3)" }}>
       <div>
-        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <MapPin size={20} color="#000000" />
-          Ahmedabad Local Sub-Market Map
+        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-cyan)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <i className="fa-solid fa-map-location-dot" style={{ color: "var(--color-cyan)" }}></i>
+          AHMEDABAD REGIONAL SUB-MARKET MAP
         </h2>
-        <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.25rem", fontWeight: 500 }}>
+        <p style={{ fontSize: "0.85rem", color: "var(--color-cyan)", marginTop: "0.25rem", opacity: 0.8 }}>
           Interactive geographical visual overlay representing inventory density across local residential nodes.
         </p>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "2rem" }}>
         
-        {/* SVG Map Canvas */}
+        {/* SVG Map Canvas - Blueprint style */}
         <div 
           style={{ 
-            backgroundColor: "var(--bg-card)", 
-            borderRadius: "var(--radius-md)", 
-            border: "1px solid var(--border-color)",
+            backgroundColor: "rgba(255,255,255,0.02)", 
+            borderRadius: "4px", 
+            border: "1px solid rgba(94, 194, 224, 0.4)",
             position: "relative",
             overflow: "hidden",
             height: "320px"
           }}
         >
           {/* Legend */}
-          <div style={{ position: "absolute", top: "1rem", left: "1rem", backgroundColor: "#ffffff", border: "1px solid var(--border-color)", padding: "0.5rem 0.75rem", borderRadius: "8px", fontSize: "0.75rem", fontWeight: 600, display: "flex", flexDirection: "column", gap: "0.25rem", zIndex: 10 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--color-success)" }} /> Available Listing
+          <div style={{ position: "absolute", top: "1rem", left: "1rem", backgroundColor: "var(--color-navy)", border: "1px solid rgba(94, 194, 224, 0.3)", padding: "0.5rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", flexDirection: "column", gap: "0.25rem", zIndex: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-cyan)" }}>
+              <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--color-cyan)" }} /> Active Listings
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--color-danger)" }} /> Sold Inventory
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-thread)" }}>
+              <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--color-thread)" }} /> Sold/Hold
             </div>
           </div>
 
@@ -97,20 +96,20 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
             <path 
               d="M 80,110 Q 180,160 260,200 T 380,50" 
               fill="none" 
-              stroke="#e5e7eb" 
+              stroke="rgba(94, 194, 224, 0.2)" 
               strokeWidth="4" 
               strokeDasharray="4 4"
             />
             <path 
               d="M 150,60 L 180,160 L 70,220" 
               fill="none" 
-              stroke="#e5e7eb" 
+              stroke="rgba(94, 194, 224, 0.2)" 
               strokeWidth="4" 
             />
             <path 
               d="M 280,100 L 260,200" 
               fill="none" 
-              stroke="#e5e7eb" 
+              stroke="rgba(94, 194, 224, 0.2)" 
               strokeWidth="3" 
             />
 
@@ -129,14 +128,14 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
                 >
                   {/* Blinking pulses for active listings */}
                   {activeCount > 0 && (
-                    <circle r="12" fill="var(--color-success)" opacity="0.2" className="animate-ping" />
+                    <circle r="12" fill="var(--color-cyan)" opacity="0.3" className="animate-ping" />
                   )}
                   
                   {/* Outer circle shape */}
                   <circle 
                     r={isSelected ? "10" : "7"} 
-                    fill={isSelected ? "#000000" : "#ffffff"} 
-                    stroke={isSelected ? "#ffffff" : "#000000"} 
+                    fill={isSelected ? "var(--color-cyan)" : "var(--color-navy)"} 
+                    stroke="var(--color-cyan)" 
                     strokeWidth={isSelected ? "2.5" : "2"} 
                   />
 
@@ -144,9 +143,10 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
                   <text 
                     y="-15" 
                     textAnchor="middle" 
-                    fill="#000000" 
+                    fill="#ffffff" 
                     fontSize="9.5" 
                     fontWeight={isSelected ? "800" : "600"}
+                    fontFamily="var(--font-mono)"
                   >
                     {node.name} ({nodeProps.length})
                   </text>
@@ -156,12 +156,12 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
           </svg>
         </div>
 
-        {/* Node Detail List Pane */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", maxHeight: "320px", overflowY: "auto" }}>
+        {/* Node Detail List Pane - Styled like Manila card */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", maxHeight: "320px", overflowY: "auto", backgroundColor: "var(--color-manila)", border: "1px solid rgba(23,50,77,0.15)", borderRadius: "4px", padding: "1.25rem", boxShadow: "2px 2px 10px rgba(0,0,0,0.1)" }}>
           {selectedNode ? (
             <>
-              <div style={{ paddingBottom: "0.75rem", borderBottom: "1px solid var(--border-color)" }}>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>{selectedNode.name} Cluster</h3>
+              <div style={{ paddingBottom: "0.75rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)" }}>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-navy)", fontFamily: "var(--font-display)" }}>{selectedNode.name.toUpperCase()} REGION</h3>
                 <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "0.2rem", fontWeight: 500 }}>
                   {selectedNode.description}
                 </p>
@@ -173,17 +173,17 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
                     key={p.id} 
                     style={{ 
                       padding: "0.75rem 1rem", 
-                      backgroundColor: "var(--bg-card)", 
-                      border: "1px solid var(--border-color)", 
-                      borderRadius: "8px",
+                      backgroundColor: "rgba(255,255,255,0.7)", 
+                      border: "1px solid rgba(23,50,77,0.15)", 
+                      borderRadius: "4px",
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center"
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: "0.85rem", fontWeight: 700 }}>{p.title}</div>
-                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontWeight: 500 }}>
+                      <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-navy)" }}>{p.title}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--color-thread)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                         {p.currency} {p.price.toLocaleString()}
                       </div>
                     </div>
@@ -191,11 +191,11 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
                       style={{ 
                         fontSize: "0.65rem", 
                         fontWeight: 700, 
-                        color: p.status === "available" ? "var(--color-success)" : "var(--color-danger)",
-                        backgroundColor: p.status === "available" ? "#f0fdf4" : "#fef2f2",
+                        color: p.status === "available" ? "#1e6b36" : "var(--color-thread)",
+                        backgroundColor: p.status === "available" ? "#e2f2e6" : "#fef2f2",
                         padding: "0.15rem 0.4rem",
                         borderRadius: "4px",
-                        border: p.status === "available" ? "1px solid #bbf7d0" : "1px solid #fecaca"
+                        border: p.status === "available" ? "1px solid #1e6b36" : "1px solid var(--color-thread)"
                       }}
                     >
                       {p.status.toUpperCase()}
@@ -204,18 +204,18 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
                 ))}
 
                 {getPropsForNode(selectedNode.name).length === 0 && (
-                  <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-light)", fontSize: "0.8rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontWeight: 600 }}>
-                    <Building size={28} />
+                  <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontSize: "0.8rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)" }}>
+                    <i className="fa-solid fa-building-circle-exclamation" style={{ fontSize: "28px" }}></i>
                     No property listings registered in this sub-market region.
                   </div>
                 )}
               </div>
             </>
           ) : (
-            <div style={{ margin: "auto", textAlign: "center", color: "var(--text-muted)", padding: "2rem" }}>
-              <Sparkles size={32} style={{ marginBottom: "0.75rem", color: "var(--text-light)" }} />
+            <div style={{ margin: "auto", textAlign: "center", color: "var(--color-navy)", padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", fontFamily: "var(--font-mono)" }}>
+              <i className="fa-solid fa-star fa-spin" style={{ fontSize: "32px", color: "var(--color-thread)" }}></i>
               <p style={{ fontSize: "0.85rem", fontWeight: 600 }}>
-                Click on any node in the geographical map canvas to load property inventory distribution details.
+                Select a sub-market node on the blueprint map canvas to load property inventory distribution.
               </p>
             </div>
           )}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Sparkles, Send, X, Loader2 } from "lucide-react";
 
 interface CopilotPanelProps {
   backendUrl: string;
@@ -15,7 +14,7 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "copilot",
-      text: "Hi! I am your **PropMatch AI Copilot**. Ask me things like:\n\n- *'List all active listings'*\n- *'Show active leads database'*\n- *'What matching deals are in the pipeline?'*\n- *'Draft a WhatsApp template for Aarini'*"
+      text: "LOGGED: PropMatch AI Desk Copilot active.\n\nReady to scan listings database or generate templates.\n\nTRY COMMANDS:\n- 'List all active listings'\n- 'Show active leads database'\n- 'What matching deals are in the pipeline?'\n- 'Draft a WhatsApp template for Aarini'"
     }
   ]);
   const [input, setInput] = useState("");
@@ -42,7 +41,7 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
       console.error(e);
       setMessages((prev) => [
         ...prev,
-        { sender: "copilot", text: "Sorry, I had trouble connecting to the PropMatch backend API." }
+        { sender: "copilot", text: "ERROR: Connection link to PropMatch core backend database offline." }
       ]);
     } finally {
       setLoading(false);
@@ -51,7 +50,7 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
 
   return (
     <>
-      {/* Floating Sparkle Button to trigger Copilot */}
+      {/* Floating Sparkle Button to trigger Copilot - Pinned Manila Badge */}
       <button
         onClick={() => setOpen(true)}
         className="btn btn-primary"
@@ -65,13 +64,14 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
           padding: 0,
           display: "grid",
           placeItems: "center",
-          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3)",
           zIndex: 90,
-          border: "2px solid #ffffff"
+          border: "2px solid var(--color-navy)",
+          backgroundColor: "var(--color-manila)"
         }}
-        title="Open AI Copilot"
+        title="Open AI Copilot Desk"
       >
-        <Sparkles size={22} className="animate-pulse" style={{ fill: "#ffffff" }} />
+        <i className="fa-solid fa-star fa-beat" style={{ fontSize: "20px", color: "var(--color-navy)" }}></i>
       </button>
 
       {/* Drawer Overlay */}
@@ -81,7 +81,7 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
             style={{
               position: "fixed",
               inset: 0,
-              backgroundColor: "rgba(0,0,0,0.15)",
+              backgroundColor: "rgba(0,0,0,0.4)",
               backdropFilter: "blur(2px)",
               zIndex: 150
             }}
@@ -94,40 +94,40 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
               right: "1.5rem",
               bottom: "1.5rem",
               width: "400px",
-              backgroundColor: "#ffffff",
-              borderRadius: "24px",
-              boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
-              border: "1px solid #e5e7eb",
+              backgroundColor: "#0d1b2a",
+              borderRadius: "4px",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
+              border: "2px solid var(--color-cyan)",
               zIndex: 151,
               display: "flex",
               flexDirection: "column",
               overflow: "hidden"
             }}
           >
-            {/* Header */}
+            {/* Header - Styled like Blueprint Header */}
             <div
               style={{
                 padding: "1.25rem 1.5rem",
-                borderBottom: "1px solid #e5e7eb",
+                borderBottom: "2px solid var(--color-cyan)",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                background: "#000000",
-                color: "#ffffff"
+                background: "var(--color-navy)",
+                color: "var(--color-cyan)"
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <Sparkles size={16} style={{ fill: "#ffffff" }} />
-                <span style={{ fontWeight: 700, fontSize: "0.95rem" }}>PropMatch AI Copilot</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-display)", fontWeight: 700 }}>
+                <i className="fa-solid fa-terminal"></i>
+                <span style={{ fontSize: "0.95rem" }}>CO-PILOT INTEL MONITOR</span>
               </div>
-              <X
-                style={{ cursor: "pointer", opacity: 0.8 }}
-                size={18}
+              <i
+                className="fa-solid fa-xmark"
+                style={{ cursor: "pointer", opacity: 0.8, fontSize: "18px" }}
                 onClick={() => setOpen(false)}
-              />
+              ></i>
             </div>
 
-            {/* Chat Body */}
+            {/* Chat Body - Retro green screen command terminal */}
             <div
               style={{
                 flexGrow: 1,
@@ -136,7 +136,8 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
                 display: "flex",
                 flexDirection: "column",
                 gap: "1rem",
-                backgroundColor: "#f9fafb"
+                backgroundColor: "#0b132b",
+                fontFamily: "var(--font-mono)"
               }}
             >
               {messages.map((m, idx) => {
@@ -146,19 +147,16 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
                     key={idx}
                     style={{
                       alignSelf: isCopilot ? "flex-start" : "flex-end",
-                      backgroundColor: isCopilot ? "#ffffff" : "#000000",
-                      color: isCopilot ? "#000000" : "#ffffff",
-                      border: isCopilot ? "1px solid #e5e7eb" : "none",
+                      backgroundColor: isCopilot ? "rgba(94, 194, 224, 0.1)" : "rgba(255, 255, 255, 0.05)",
+                      color: isCopilot ? "var(--color-cyan)" : "#ffffff",
+                      border: isCopilot ? "1px solid rgba(94, 194, 224, 0.4)" : "1px solid rgba(255,255,255,0.2)",
                       padding: "0.85rem 1.1rem",
-                      borderRadius: "16px",
-                      borderTopLeftRadius: isCopilot ? "0" : "16px",
-                      borderTopRightRadius: isCopilot ? "16px" : "0",
-                      fontSize: "0.85rem",
+                      borderRadius: "4px",
+                      fontSize: "0.8rem",
                       lineHeight: "1.4",
                       maxWidth: "85%",
                       whiteSpace: "pre-line",
-                      fontWeight: 500,
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.01)"
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
                     }}
                   >
                     {m.text}
@@ -169,21 +167,19 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
                 <div
                   style={{
                     alignSelf: "flex-start",
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #e5e7eb",
+                    backgroundColor: "rgba(94, 194, 224, 0.1)",
+                    border: "1px solid rgba(94, 194, 224, 0.4)",
                     padding: "0.85rem 1.1rem",
-                    borderRadius: "16px",
-                    borderTopLeftRadius: "0",
+                    borderRadius: "4px",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
-                    fontSize: "0.85rem",
-                    color: "var(--text-muted)",
-                    fontWeight: 500
+                    fontSize: "0.8rem",
+                    color: "var(--color-cyan)"
                   }}
                 >
-                  <Loader2 size={14} className="animate-spin" />
-                  Analyzing database...
+                  <i className="fa-solid fa-rotate fa-spin"></i>
+                  QUERYING SQLITE DATABASES...
                 </div>
               )}
             </div>
@@ -193,21 +189,24 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
               onSubmit={handleSend}
               style={{
                 padding: "1rem 1.25rem",
-                borderTop: "1px solid #e5e7eb",
+                borderTop: "2px solid var(--color-cyan)",
                 display: "flex",
                 gap: "0.5rem",
-                backgroundColor: "#ffffff"
+                backgroundColor: "var(--color-navy)"
               }}
             >
               <input
                 type="text"
-                placeholder="Ask Copilot search inventory or draft message..."
+                placeholder="Ask Copilot or type database search query..."
                 className="form-control"
                 style={{
-                  borderRadius: "20px",
-                  border: "1px solid #e5e7eb",
+                  borderRadius: "4px",
+                  border: "1px solid rgba(94, 194, 224, 0.4)",
+                  backgroundColor: "#0b132b",
+                  color: "#ffffff",
                   padding: "0.5rem 1rem",
-                  fontSize: "0.85rem"
+                  fontSize: "0.85rem",
+                  fontFamily: "var(--font-mono)"
                 }}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -216,20 +215,20 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
               <button
                 type="submit"
                 style={{
-                  background: "#000000",
+                  background: "var(--color-cyan)",
                   border: "none",
                   width: "36px",
                   height: "36px",
-                  borderRadius: "50%",
+                  borderRadius: "4px",
                   display: "grid",
                   placeItems: "center",
-                  color: "#fff",
+                  color: "var(--color-navy)",
                   cursor: "pointer",
                   flexShrink: 0
                 }}
                 disabled={loading}
               >
-                <Send size={14} />
+                <i className="fa-solid fa-paper-plane" style={{ fontSize: "14px" }}></i>
               </button>
             </form>
           </div>

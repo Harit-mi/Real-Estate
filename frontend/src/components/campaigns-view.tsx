@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Send, FileSpreadsheet, Mail, AlertCircle, Loader2 } from "lucide-react";
 
 interface Property {
   id: string;
@@ -82,11 +81,11 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "2.5rem" }}>
       
-      {/* Left Column: Pick listings and compose email */}
-      <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <Mail size={18} color="#000000" />
-          Compose Newsletter Broadcast
+      {/* Left Column: Pick listings and compose email - Styled like Manila folder */}
+      <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
+        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+          <i className="fa-solid fa-envelope" style={{ color: "var(--color-navy)" }}></i>
+          COMPOSE NEWSLETTER BROADCAST
         </h2>
 
         <form onSubmit={handleBroadcast} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -96,7 +95,6 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
               type="text" 
               placeholder="e.g. Ahmedabad Premium Villas Showcase" 
               className="form-control"
-              style={{ borderRadius: "8px" }}
               value={campaignName}
               onChange={(e) => setCampaignName(e.target.value)}
               required
@@ -108,19 +106,19 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
             <textarea 
               rows={4}
               className="form-control"
-              style={{ borderRadius: "8px", fontSize: "0.85rem" }}
+              style={{ fontSize: "0.85rem" }}
               value={emailIntro}
               onChange={(e) => setEmailIntro(e.target.value)}
               required
             />
           </div>
 
-          <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "1rem", marginTop: "0.5rem" }}>
+          <div style={{ borderTop: "1.5px dashed rgba(23,50,77,0.2)", paddingTop: "1rem", marginTop: "0.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
-              <span style={{ fontSize: "0.8rem", fontWeight: 700 }}>Select Listings to Showcase ({selectedIds.length})</span>
+              <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-navy)" }}>Select Listings to Showcase ({selectedIds.length})</span>
               {recipientCount !== null && (
-                <span style={{ fontSize: "0.75rem", color: "var(--text-success)", fontWeight: 700, backgroundColor: "#f0fdf4", padding: "0.2rem 0.5rem", borderRadius: "6px" }}>
-                  Target Recipients: {recipientCount} Leads
+                <span style={{ fontSize: "0.75rem", color: "#1e6b36", fontWeight: 700, backgroundColor: "#e2f2e6", padding: "0.2rem 0.5rem", borderRadius: "4px", border: "1px solid #1e6b36" }}>
+                  Target: {recipientCount} Leads
                 </span>
               )}
             </div>
@@ -134,9 +132,9 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
                     onClick={() => toggleSelectProperty(p.id)}
                     style={{ 
                       padding: "0.75rem 1rem", 
-                      backgroundColor: isSelected ? "#f3f4f6" : "var(--bg-card)",
-                      border: isSelected ? "1px solid #000000" : "1px solid var(--border-color)",
-                      borderRadius: "8px",
+                      backgroundColor: isSelected ? "rgba(23, 50, 77, 0.08)" : "rgba(255, 255, 255, 0.7)",
+                      border: isSelected ? "2px solid var(--color-navy)" : "1px solid rgba(23, 50, 77, 0.15)",
+                      borderRadius: "4px",
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "space-between",
@@ -144,10 +142,10 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: "0.8rem", fontWeight: 700 }}>{p.title}</div>
+                      <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-navy)" }}>{p.title}</div>
                       <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", fontWeight: 500 }}>{p.location}</div>
                     </div>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 800 }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 800, fontFamily: "var(--font-mono)", color: "var(--color-navy)" }}>
                       {p.currency} {p.price.toLocaleString()}
                     </span>
                   </div>
@@ -159,17 +157,17 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
           <button 
             type="submit" 
             className="btn btn-primary"
-            style={{ width: "100%", borderRadius: "8px", padding: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", marginTop: "0.5rem" }}
+            style={{ width: "100%", padding: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", marginTop: "0.5rem" }}
             disabled={sending || selectedIds.length === 0}
           >
             {sending ? (
               <>
-                <Loader2 size={16} className="animate-spin" />
+                <i className="fa-solid fa-rotate fa-spin" style={{ fontSize: "16px" }}></i>
                 Broadcasting Email Campaigns...
               </>
             ) : (
               <>
-                <Send size={14} />
+                <i className="fa-solid fa-paper-plane" style={{ fontSize: "14px" }}></i>
                 Send Simulated Campaign Broadcast
               </>
             )}
@@ -177,34 +175,34 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
         </form>
       </div>
 
-      {/* Right Column: Visual Email Preview Template */}
-      <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem", display: "flex", flexDirection: "column" }}>
-        <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <FileSpreadsheet size={18} color="#000000" />
-          Email Template Preview
+      {/* Right Column: Visual Email Preview Template - Styled like a Blueprint draft page */}
+      <div style={{ backgroundColor: "var(--color-navy)", border: "2px solid var(--color-cyan)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", boxShadow: "2px 4px 10px rgba(0,0,0,0.3)" }}>
+        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-cyan)", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(94,194,224,0.3)", paddingBottom: "0.5rem" }}>
+          <i className="fa-solid fa-file-code" style={{ color: "var(--color-cyan)" }}></i>
+          NEWSLETTER BLUEPRINT PREVIEW
         </h2>
 
         {/* Email Preview Sheet */}
         <div 
           style={{ 
             flexGrow: 1, 
-            backgroundColor: "#f9fafb", 
-            border: "1px solid #e5e7eb", 
-            borderRadius: "12px", 
+            backgroundColor: "rgba(255,255,255,0.03)", 
+            border: "1px solid rgba(94, 194, 224, 0.4)", 
+            borderRadius: "4px", 
             padding: "1.5rem",
             fontSize: "0.8rem",
             lineHeight: "1.5",
-            color: "#374151"
+            color: "#ffffff"
           }}
         >
           {/* Email Subject block */}
-          <div style={{ borderBottom: "1px solid #e5e7eb", paddingBottom: "0.75rem", marginBottom: "1rem" }}>
+          <div style={{ borderBottom: "1px dashed rgba(94, 194, 224, 0.3)", paddingBottom: "0.75rem", marginBottom: "1rem", fontFamily: "var(--font-mono)", color: "var(--color-cyan)" }}>
             <div><strong>Subject:</strong> {campaignName || "[Campaign Name]"}</div>
             <div><strong>From:</strong> PropMatch Global Advisory &lt;info@propmatch.ai&gt;</div>
           </div>
 
           {/* Email Body intro */}
-          <div style={{ whiteSpace: "pre-line", marginBottom: "1.25rem", fontWeight: 500 }}>
+          <div style={{ whiteSpace: "pre-line", marginBottom: "1.25rem", fontWeight: 500, fontFamily: "var(--font-sans)", opacity: 0.9 }}>
             {emailIntro}
           </div>
 
@@ -212,26 +210,26 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {selectedIds.length > 0 ? (
               properties.filter(p => selectedIds.includes(p.id)).map(p => (
-                <div key={p.id} style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb", borderRadius: "8px", padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div key={p.id} style={{ backgroundColor: "rgba(255,255,255,0.02)", border: "1px solid rgba(94, 194, 224, 0.3)", borderRadius: "4px", padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div>
-                    <div style={{ fontWeight: 700, color: "#111827" }}>{p.title}</div>
-                    <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>{p.location}</div>
+                    <div style={{ fontWeight: 700, color: "#ffffff", fontFamily: "var(--font-sans)" }}>{p.title}</div>
+                    <div style={{ fontSize: "0.7rem", color: "var(--color-cyan)", fontFamily: "var(--font-mono)" }}>{p.location}</div>
                   </div>
-                  <div style={{ fontWeight: 800, color: "#111827" }}>
+                  <div style={{ fontWeight: 800, color: "#ffffff", fontFamily: "var(--font-mono)" }}>
                     {p.currency} {p.price.toLocaleString()}
                   </div>
                 </div>
               ))
             ) : (
-              <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-light)", border: "1px dashed #d1d5db", borderRadius: "8px", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-                <AlertCircle size={24} />
-                Select properties on the left to see featured email preview cards.
+              <div style={{ textAlign: "center", padding: "2rem", color: "var(--color-cyan)", border: "1px dashed rgba(94, 194, 224, 0.4)", borderRadius: "4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)" }}>
+                <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: "20px" }}></i>
+                Select listings on the left to see featured email preview blueprints.
               </div>
             )}
           </div>
 
           {/* Email Footer */}
-          <div style={{ borderTop: "1px solid #e5e7eb", marginTop: "1.5rem", paddingTop: "0.75rem", fontSize: "0.7rem", color: "#9ca3af", textAlign: "center", fontWeight: 500 }}>
+          <div style={{ borderTop: "1px dashed rgba(94, 194, 224, 0.3)", marginTop: "1.5rem", paddingTop: "0.75rem", fontSize: "0.7rem", color: "var(--color-cyan)", textAlign: "center", fontFamily: "var(--font-mono)", opacity: 0.7 }}>
             PropMatch AI Advisory Services · 1205 S.G. Highway, Ahmedabad · Unsubscribe
           </div>
         </div>

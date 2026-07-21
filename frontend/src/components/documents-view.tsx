@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { FileText, Plus, FileSignature, CheckCircle, Printer, AlertCircle } from "lucide-react";
 
 interface Contact {
   name: string;
@@ -96,14 +95,14 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "2.5rem" }}>
       
-      {/* Left Column: Documents Directory & Generator */}
+      {/* Left Column: Documents Directory & Generator - Styled like Manila Files */}
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         
         {/* Document Generator Box */}
-        <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem" }}>
-          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Plus size={18} color="#000000" />
-            Generate Smart Agreement
+        <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+            <i className="fa-solid fa-plus-circle" style={{ color: "var(--color-navy)" }}></i>
+            COMPILE SMART AGREEMENT
           </h2>
 
           <form onSubmit={handleGenerate} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -111,7 +110,6 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
               <label>Select Active Deal *</label>
               <select 
                 className="form-control"
-                style={{ borderRadius: "8px" }}
                 value={selectedDealId}
                 onChange={(e) => setSelectedDealId(e.target.value)}
                 required
@@ -129,7 +127,6 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
               <label>Agreement Template Type</label>
               <select 
                 className="form-control"
-                style={{ borderRadius: "8px" }}
                 value={docType}
                 onChange={(e) => setDocType(e.target.value)}
               >
@@ -141,7 +138,7 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
             <button 
               type="submit" 
               className="btn btn-primary"
-              style={{ width: "100%", borderRadius: "8px", padding: "0.8rem" }}
+              style={{ width: "100%", padding: "0.8rem" }}
               disabled={generating}
             >
               {generating ? "Compiling Document..." : "Generate Agreement"}
@@ -150,14 +147,14 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
         </div>
 
         {/* Generated Documents Archive list */}
-        <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2rem", display: "flex", flexDirection: "column" }}>
-          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <FileText size={18} color="#000000" />
-            Document Archive Directory ({documents.length})
+        <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+            <i className="fa-solid fa-folder-open" style={{ color: "var(--color-navy)" }}></i>
+            AGREEMENT ARCHIVE DIRECTORY ({documents.length})
           </h2>
 
           {loading && documents.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontWeight: 600 }}>Loading archives...</div>
+            <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading archives...</div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxHeight: "300px", overflowY: "auto" }}>
               {documents.map((doc) => {
@@ -168,9 +165,9 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
                     onClick={() => setSelectedDoc(doc)}
                     style={{ 
                       padding: "1rem", 
-                      backgroundColor: isSelected ? "#f3f4f6" : "var(--bg-card)",
-                      border: isSelected ? "1px solid #000000" : "1px solid var(--border-color)",
-                      borderRadius: "12px",
+                      backgroundColor: isSelected ? "rgba(23, 50, 77, 0.08)" : "rgba(255,255,255,0.7)",
+                      border: isSelected ? "2px solid var(--color-navy)" : "1px solid rgba(23,50,77,0.15)",
+                      borderRadius: "4px",
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "space-between",
@@ -178,12 +175,12 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: "0.85rem", fontWeight: 700 }}>{doc.title}</div>
-                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.2rem", fontWeight: 500 }}>
+                      <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-navy)" }}>{doc.title}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.2rem", fontFamily: "var(--font-mono)", fontWeight: 500 }}>
                         Compiled: {new Date(doc.createdAt).toLocaleDateString()}
                       </div>
                     </div>
-                    <span style={{ fontSize: "0.65rem", fontWeight: 700, backgroundColor: "#f3e8ff", color: "#7c3aed", padding: "0.2rem 0.5rem", borderRadius: "6px" }}>
+                    <span style={{ fontSize: "0.65rem", fontWeight: 700, backgroundColor: "#f3e8ff", color: "#7c3aed", padding: "0.2rem 0.5rem", borderRadius: "4px" }}>
                       {doc.type.toUpperCase()}
                     </span>
                   </div>
@@ -191,9 +188,9 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
               })}
 
               {documents.length === 0 && (
-                <div style={{ textAlign: "center", padding: "2.5rem", color: "var(--text-light)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontWeight: 600 }}>
-                  <AlertCircle size={32} />
-                  No documents compiled yet. Select a deal to generate agreements.
+                <div style={{ textAlign: "center", padding: "2.5rem", color: "var(--text-muted)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-mono)" }}>
+                  <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: "30px", marginBottom: "0.5rem" }}></i>
+                  No documents compiled. Select a deal to generate agreements.
                 </div>
               )}
             </div>
@@ -202,34 +199,56 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
 
       </div>
 
-      {/* Right Column: Compiled Document View Sheet */}
-      <div style={{ backgroundColor: "#ffffff", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "2.5rem", display: "flex", flexDirection: "column" }}>
+      {/* Right Column: Compiled Document View Sheet - Styled like a physical Wooden Clipboard */}
+      <div style={{ backgroundColor: "#5c3d24", border: "6px solid #3d2514", borderRadius: "var(--radius-sm)", padding: "2.5rem 2rem", display: "flex", flexDirection: "column", boxShadow: "0 10px 25px rgba(0,0,0,0.35)", position: "relative" }}>
+        
+        {/* Metal Clip on Clipboard */}
+        <div style={{ 
+          background: "linear-gradient(to bottom, #d1d5db, #9ca3af)", 
+          border: "2px solid #6b7280", 
+          width: "140px", 
+          height: "35px", 
+          position: "absolute",
+          top: "-5px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          borderRadius: "4px 4px 0 0",
+          boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+          zIndex: 10,
+          display: "grid",
+          placeItems: "center"
+        }}>
+          <div style={{ width: "25px", height: "8px", backgroundColor: "#4b5563", borderRadius: "50%" }}></div>
+        </div>
+
         {selectedDoc ? (
-          <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column", height: "100%", marginTop: "1rem" }}>
             
             {/* Header / Actions toolbar */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--border-color)", paddingBottom: "1.25rem", marginBottom: "1.5rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "1.25rem", marginBottom: "1.5rem", backgroundColor: "var(--color-manila)", padding: "1rem", borderRadius: "4px", border: "1px solid rgba(23,50,77,0.15)" }}>
               <div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>Document Viewer</h3>
-                <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontWeight: 500 }}>ID: {selectedDoc.id}</span>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)" }}>DOCUMENT CONTRACT SHEET</h3>
+                <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>REF: {selectedDoc.id.substring(0,8).toUpperCase()}</span>
               </div>
               
               <div style={{ display: "flex", gap: "0.5rem" }}>
                 <button 
                   onClick={() => window.print()}
-                  style={{ display: "inline-flex", gap: "0.25rem", alignItems: "center", padding: "0.4rem 0.8rem", fontSize: "0.75rem", border: "1px solid var(--border-color)", borderRadius: "6px", backgroundColor: "#fff", cursor: "pointer", fontWeight: 600 }}
+                  className="btn btn-secondary"
+                  style={{ display: "inline-flex", gap: "0.25rem", alignItems: "center", padding: "0.4rem 0.8rem", fontSize: "0.75rem" }}
                 >
-                  <Printer size={13} />
-                  Print Contract
+                  <i className="fa-solid fa-print"></i>
+                  Print
                 </button>
                 <button 
                   onClick={handleSign}
                   disabled={signing}
-                  style={{ display: "inline-flex", gap: "0.25rem", alignItems: "center", padding: "0.4rem 0.8rem", fontSize: "0.75rem", backgroundColor: "#000000", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: 600 }}
+                  className="btn btn-primary"
+                  style={{ display: "inline-flex", gap: "0.25rem", alignItems: "center", padding: "0.4rem 0.8rem", fontSize: "0.75rem" }}
                 >
                   {signing ? "Signing..." : (
                     <>
-                      <FileSignature size={13} />
+                      <i className="fa-solid fa-file-signature"></i>
                       E-Sign Lock
                     </>
                   )}
@@ -241,18 +260,18 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
             <div 
               style={{ 
                 flexGrow: 1, 
-                backgroundColor: "#fafafa", 
-                border: "1px solid var(--border-color)", 
+                backgroundColor: "#f6f4ef", 
+                border: "1px solid #d8c79a", 
                 padding: "2rem 2.5rem", 
-                borderRadius: "12px", 
-                fontFamily: "Courier New, monospace",
+                borderRadius: "2px", 
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.85rem",
-                color: "#1f2937",
+                color: "var(--color-navy)",
                 lineHeight: "1.6",
                 whiteSpace: "pre-line",
                 overflowY: "auto",
                 maxHeight: "450px",
-                boxShadow: "inset 0 2px 10px rgba(0,0,0,0.02)"
+                boxShadow: "2px 2px 10px rgba(0,0,0,0.1)"
               }}
             >
               {selectedDoc.content}
@@ -260,9 +279,9 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
 
           </div>
         ) : (
-          <div style={{ margin: "auto", textAlign: "center", color: "var(--text-muted)", padding: "4rem 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", fontWeight: 600 }}>
-            <CheckCircle size={44} style={{ color: "var(--text-light)" }} />
-            <p style={{ fontSize: "0.9rem" }}>Select a contract sheet from the archive to render print preview.</p>
+          <div style={{ margin: "auto", textAlign: "center", color: "#ffffff", padding: "4rem 0", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", fontFamily: "var(--font-mono)" }}>
+            <i className="fa-solid fa-folder-closed" style={{ fontSize: "40px", color: "var(--color-manila)", marginBottom: "0.5rem" }}></i>
+            <p style={{ fontSize: "0.9rem" }}>Select a contract sheet from the archive to render clipboard preview.</p>
           </div>
         )}
       </div>
