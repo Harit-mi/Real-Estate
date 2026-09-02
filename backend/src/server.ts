@@ -160,7 +160,10 @@ app.post("/api/tenant/seed", async (req, res) => {
 });
 
 /**
- * Middleware to auto-inject the default Tenant ID for this MVP.
+ * ⚠️ SECURITY: single-tenant hack, breaks isolation the moment tenant #2 exists
+ * This function blindly grabs the first tenant from the DB. It is a convenience for the MVP only.
+ * Must be replaced with real auth middleware that extracts tenant ID from a JWT or session
+ * BEFORE onboarding a second tenant or deploying to production.
  */
 const getTenantId = async (): Promise<string> => {
   let tenant = await prisma.tenant.findFirst();
