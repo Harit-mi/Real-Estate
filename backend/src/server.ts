@@ -334,7 +334,11 @@ app.post("/api/properties", async (req, res) => {
  */
 app.get("/api/deals", async (req, res) => {
   try {
+    // TODO: Require Auth middleware upstream to extract tenant from session/JWT
+    // rather than using this mock getTenantId() function.
     const tenantId = await getTenantId();
+    
+    // TODO: Add pagination (skip/take) based on req.query to handle scaling
     const deals = await prisma.deal.findMany({
       where: { tenantId },
       include: {
@@ -350,7 +354,8 @@ app.get("/api/deals", async (req, res) => {
     });
     res.json(deals);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error("Error fetching deals:", error);
+    res.status(500).json({ error: "An internal server error occurred while fetching deals." });
   }
 });
 

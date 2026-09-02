@@ -1,5 +1,24 @@
 import { prisma } from "../utils/db";
 
+const SCORE_WEIGHTS = {
+  BEDROOMS_EXACT: 30,
+  BEDROOMS_NEAR: 15,
+  PRICE_EXACT: 40,
+  PRICE_NEAR: 20,
+  LOCATION_EXACT: 30,
+  LOCATION_NEAR: 15,
+};
+
+const MARGINS = {
+  LOWER: 0.85,
+  UPPER: 1.15,
+};
+
+const EXCHANGE_RATES: Record<string, number> = {
+  USD_TO_INR: 83,
+  EUR_TO_USD: 1.08,
+};
+
 export interface MatchResult {
   propertyId: string;
   requirementId: string;
@@ -9,6 +28,7 @@ export interface MatchResult {
     price: number;
     location: number;
   };
+  reasons: string[];
 }
 
 /**
@@ -18,7 +38,7 @@ export function calculateMatchScore(
   req: {
     type: string;
     propertyType: string;
-    bedrooms: number;
+    bedrooms: number | null;
     budgetMin: number;
     budgetMax: number;
     locations: string;
@@ -27,53 +47,64 @@ export function calculateMatchScore(
   prop: {
     type: string;
     propertyType: string;
-    bedrooms: number;
+    bedrooms: number | null;
     price: number;
     location: string;
     currency: string;
   }
-): { score: number; breakdown: { bedrooms: number; price: number; location: number } } {
+): { score: number; breakdown: { bedrooms: number; price: number; location: number }; reasons: string[] } {
   const breakdown = { bedrooms: 0, price: 0, location: 0 };
+  const reasons: string[] = [];
 
   // Hard constraints: Requirement type (buy/rent) and property type must match exactly
   if (req.type.toLowerCase() !== prop.type.toLowerCase()) {
-    return { score: 0, breakdown };
+    reasons.push(`Deal type mismatch (${req.type} vs ${prop.type})`);
+    return { score: 0, breakdown, reasons };
   }
 
-  // Handle case differences and spaces in property type (e.g. "apartment" vs "Apartment")
+  // Handle case differences and spaces in property type
   const reqPropType = req.propertyType.toLowerCase().replace(/\s+/g, "");
   const propPropType = prop.propertyType.toLowerCase().replace(/\s+/g, "");
   if (reqPropType !== propPropType) {
-    return { score: 0, breakdown };
+    reasons.push(`Property type mismatch (${req.propertyType} vs ${prop.propertyType})`);
+    return { score: 0, breakdown, reasons };
   }
 
   // 1. Bedrooms match (Max: 30 points)
-  if (req.bedrooms === prop.bedrooms) {
-    breakdown.bedrooms = 30;
-  } else if (Math.abs(req.bedrooms - prop.bedrooms) === 1) {
-    breakdown.bedrooms = 15;
+  if (req.bedrooms != null && prop.bedrooms != null) {
+    if (req.bedrooms === prop.bedrooms) {
+      breakdown.bedrooms = SCORE_WEIGHTS.BEDROOMS_EXACT;
+      reasons.push(`Exact bedroom match (${req.bedrooms} BHK)`);
+    } else if (Math.abs(req.bedrooms - prop.bedrooms) === 1) {
+      breakdown.bedrooms = SCORE_WEIGHTS.BEDROOMS_NEAR;
+      reasons.push(`Close bedroom match (${prop.bedrooms} vs required ${req.bedrooms})`);
+    } else {
+      reasons.push(`Bedroom mismatch (${prop.bedrooms} vs required ${req.bedrooms})`);
+    }
+  } else {
+    reasons.push(`Missing bedroom information for match calculation`);
   }
 
   // 2. Budget match (Max: 40 points)
-  // Check if currencies match. For simplicity, assume conversion if they differ,
-  // but in v1 we enforce same currency matching or log standard values.
   let propPrice = prop.price;
   if (req.currency !== prop.currency) {
-    // Simple mock currency converter
-    if (req.currency === "INR" && prop.currency === "USD") propPrice = prop.price * 83;
-    else if (req.currency === "USD" && prop.currency === "INR") propPrice = prop.price / 83;
-    else if (req.currency === "EUR" && prop.currency === "USD") propPrice = prop.price * 1.08;
-    else if (req.currency === "USD" && prop.currency === "EUR") propPrice = prop.price / 1.08;
+    if (req.currency === "INR" && prop.currency === "USD") propPrice = prop.price * EXCHANGE_RATES.USD_TO_INR;
+    else if (req.currency === "USD" && prop.currency === "INR") propPrice = prop.price / EXCHANGE_RATES.USD_TO_INR;
+    else if (req.currency === "EUR" && prop.currency === "USD") propPrice = prop.price * EXCHANGE_RATES.EUR_TO_USD;
+    else if (req.currency === "USD" && prop.currency === "EUR") propPrice = prop.price / EXCHANGE_RATES.EUR_TO_USD;
   }
 
   if (propPrice >= req.budgetMin && propPrice <= req.budgetMax) {
-    breakdown.price = 40;
+    breakdown.price = SCORE_WEIGHTS.PRICE_EXACT;
+    reasons.push(`Price is exactly within budget`);
   } else {
-    // Check for margins (15% grace range)
-    const lowerMargin = req.budgetMin * 0.85;
-    const upperMargin = req.budgetMax * 1.15;
+    const lowerMargin = req.budgetMin * MARGINS.LOWER;
+    const upperMargin = req.budgetMax * MARGINS.UPPER;
     if (propPrice >= lowerMargin && propPrice <= upperMargin) {
-      breakdown.price = 20;
+      breakdown.price = SCORE_WEIGHTS.PRICE_NEAR;
+      reasons.push(`Price is slightly outside budget margins`);
+    } else {
+      reasons.push(`Price is significantly outside budget (${propPrice})`);
     }
   }
 
@@ -88,28 +119,33 @@ export function calculateMatchScore(
   let locationScore = 0;
   for (const loc of reqLocs) {
     if (propLoc.includes(loc) || loc.includes(propLoc)) {
-      locationScore = 30;
+      locationScore = SCORE_WEIGHTS.LOCATION_EXACT;
+      reasons.push(`Exact location match (${loc})`);
       break;
     }
   }
 
-  // If no exact substring match, look for word intersection
   if (locationScore === 0) {
     const propWords = propLoc.split(/\s+/);
     for (const loc of reqLocs) {
       const locWords = loc.split(/\s+/);
       const intersection = propWords.filter((w) => w.length > 2 && locWords.includes(w));
       if (intersection.length > 0) {
-        locationScore = 15;
+        locationScore = SCORE_WEIGHTS.LOCATION_NEAR;
+        reasons.push(`Partial location match nearby (${intersection.join(", ")})`);
         break;
       }
     }
+  }
+  
+  if (locationScore === 0) {
+    reasons.push(`Location mismatch (${prop.location})`);
   }
 
   breakdown.location = locationScore;
 
   const totalScore = breakdown.bedrooms + breakdown.price + breakdown.location;
-  return { score: totalScore, breakdown };
+  return { score: totalScore, breakdown, reasons };
 }
 
 /**
@@ -151,13 +187,14 @@ export async function matchLeadToProperties(
   });
 
   for (const prop of properties) {
-    const { score, breakdown } = calculateMatchScore(req, prop);
+    const { score, breakdown, reasons } = calculateMatchScore(req, prop);
     if (score >= threshold) {
       matches.push({
         propertyId: prop.id,
         requirementId: req.id,
         score,
         breakdown,
+        reasons,
       });
 
       // Create Deal if it doesn't exist
@@ -261,13 +298,14 @@ export async function matchPropertyToLeads(
   if (!defaultAgent) return [];
 
   for (const req of requirements) {
-    const { score, breakdown } = calculateMatchScore(req, prop);
+    const { score, breakdown, reasons } = calculateMatchScore(req, prop);
     if (score >= threshold) {
       matches.push({
         propertyId: prop.id,
         requirementId: req.id,
         score,
         breakdown,
+        reasons,
       });
 
       // Find or create active deal for this requirement

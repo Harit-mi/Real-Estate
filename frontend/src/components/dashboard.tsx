@@ -411,7 +411,8 @@ export default function Dashboard({ backendUrl, refreshTrigger }: DashboardProps
             </defs>
             {threadCoords.map((t, idx) => {
               // Calculate thickness based on score (thin = 1.5px, strong = 6.5px)
-              const thickness = 1.5 + ((t.score - 40) / 60) * 5;
+              // Clamp to a minimum of 1.5px to avoid negative/invalid strokeWidth for low scores
+              const thickness = Math.max(1.5, 1.5 + ((t.score - 40) / 60) * 5);
               const isSelected = activeMatch && activeMatch.lead.id === t.lead.id && activeMatch.property.id === t.property.id;
 
               return (
@@ -446,12 +447,23 @@ export default function Dashboard({ backendUrl, refreshTrigger }: DashboardProps
                 <div 
                   key={l.id} 
                   className="index-card"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      const match = matches.find(m => m.lead.id === l.id);
+                      if (match) handleThreadClick(match);
+                    }
+                  }}
                   onClick={() => {
                     const match = matches.find(m => m.lead.id === l.id);
                     if (match) handleThreadClick(match);
                   }}
                 >
-                  <div className="index-card-pin" ref={el => { cardRefs.current[`lead-pin-${l.id}`] = el; }}></div>
+                  <div className="index-card-pin" ref={el => { 
+                    if (el) cardRefs.current[`lead-pin-${l.id}`] = el; 
+                    else delete cardRefs.current[`lead-pin-${l.id}`];
+                  }}></div>
                   <h4 className="card-title-stamped">{l.name}</h4>
                   <div className="card-field-stamped" style={{ fontSize: "0.75rem", fontStyle: "italic", marginBottom: "0.5rem" }}>
                     {l.jobTitle || "Lead Profile"} - {l.company || "N/A"}
@@ -481,12 +493,23 @@ export default function Dashboard({ backendUrl, refreshTrigger }: DashboardProps
                   key={p.id} 
                   className="index-card"
                   style={{ transform: "rotate(-0.5deg)" }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      const match = matches.find(m => m.property.id === p.id);
+                      if (match) handleThreadClick(match);
+                    }
+                  }}
                   onClick={() => {
                     const match = matches.find(m => m.property.id === p.id);
                     if (match) handleThreadClick(match);
                   }}
                 >
-                  <div className="index-card-pin" ref={el => { cardRefs.current[`prop-pin-${p.id}`] = el; }}></div>
+                  <div className="index-card-pin" ref={el => { 
+                    if (el) cardRefs.current[`prop-pin-${p.id}`] = el; 
+                    else delete cardRefs.current[`prop-pin-${p.id}`];
+                  }}></div>
                   <h4 className="card-title-stamped">{p.title}</h4>
                   <div className="card-field-stamped" style={{ textTransform: "uppercase", fontSize: "0.7rem", color: "var(--color-thread)" }}>
                     [{p.status}]
