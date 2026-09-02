@@ -80,7 +80,7 @@ export default function Dashboard({ backendUrl, refreshTrigger }: DashboardProps
       const rawLeads: Lead[] = await resLeads.json();
       
       // Filter leads that have requirements
-      const leadsWithReqs = rawLeads.filter(l => l.requirement);
+      const leadsWithReqs = rawLeads.map(l => ({ ...l, requirement: (l as any).requirements?.[0] })).filter(l => l.requirement);
       setLeads(leadsWithReqs);
 
       // 2. Fetch properties
