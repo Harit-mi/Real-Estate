@@ -74,7 +74,7 @@ interface KanbanBoardProps {
 }
 
 const STAGES = [
-  { key: "new_match", label: "New Match", color: "#000000" },
+  { key: "new_match", label: "New Match", color: "var(--color-navy)" },
   { key: "contacted", label: "Contacted", color: "#737373" },
   { key: "shortlisted", label: "Shortlisted", color: "#eab308" },
   { key: "visit_scheduled", label: "Site Visit", color: "#8b5cf6" },
@@ -289,7 +289,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                         <div className="deal-details-preview" style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
                           <div>📍 Loc: {req.locations}</div>
                           <div>🏠 Type: {req.bedrooms}BHK {req.propertyType}</div>
-                          <div style={{ color: "#000000", fontWeight: 700, marginTop: "0.25rem" }}>
+                          <div style={{ color: "var(--color-navy)", fontWeight: 700, marginTop: "0.25rem" }}>
                             {formatPrice(req.budgetMin, req.currency)} - {formatPrice(req.budgetMax, req.currency)}
                           </div>
                         </div>
@@ -335,7 +335,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
 
             {/* Profile Info */}
             <div style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)", padding: "1.25rem", marginBottom: "1.5rem" }}>
-              <h3 style={{ fontSize: "0.8rem", fontWeight: 700, color: "#000000", textTransform: "uppercase", marginBottom: "0.75rem", letterSpacing: "0.5px" }}>
+              <h3 style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-navy)", textTransform: "uppercase", marginBottom: "0.75rem", letterSpacing: "0.5px" }}>
                 Lead requirement details
               </h3>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", fontSize: "0.85rem", fontWeight: 500 }}>
