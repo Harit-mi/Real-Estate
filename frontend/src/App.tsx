@@ -20,7 +20,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [seeding, setSeeding] = useState(false);
-  const [tenantName, setTenantName] = useState("PropMatch Global Realty");
+  const [, setTenantName] = useState("PropMatch Global Realty");
   const [selectedPhoneContact, setSelectedPhoneContact] = useState<{
     name: string;
     phone: string;
@@ -111,105 +111,38 @@ function App() {
   return (
     <div className="app-container">
       {/* Sleek Dark Floating Sidebar (Figma style) */}
-      <div className="sidebar">
-        <div className="sidebar-nav">
-          <div className="logo-container">
-            <span className="logo-text">P.</span>
-          </div>
+            {/* Top Nav (Airbnb style) */}
+      <div className="sidebar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px', height: '80px', borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-page)', width: '100%', flexDirection: 'row' }}>
+        <div style={{ color: 'var(--color-cyan)', fontSize: '32px', cursor: 'pointer' }} onClick={() => setActiveTab("dashboard")}>
+          <i className="fa-brands fa-airbnb"></i>
+          <span style={{ fontSize: '24px', fontWeight: 700, marginLeft: '8px', letterSpacing: '-0.5px' }}>propmatch</span>
+        </div>
 
-          <div
-            className={`nav-item ${activeTab === "dashboard" ? "active" : ""}`}
-            onClick={() => setActiveTab("dashboard")}
-            data-tooltip="Dashboard"
-          >
-            <i className="fa-solid fa-gauge-high" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "pipeline" ? "active" : ""}`}
-            onClick={() => setActiveTab("pipeline")}
-            data-tooltip="Sales Pipeline"
-          >
-            <i className="fa-solid fa-users" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "csv-ingest" ? "active" : ""}`}
-            onClick={() => setActiveTab("csv-ingest")}
-            data-tooltip="CSV Lead Ingest"
-          >
-            <i className="fa-solid fa-file-csv" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "properties" ? "active" : ""}`}
-            onClick={() => setActiveTab("properties")}
-            data-tooltip="Property Inventory"
-          >
-            <i className="fa-solid fa-building" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "tasks" ? "active" : ""}`}
-            onClick={() => setActiveTab("tasks")}
-            data-tooltip="Task Schedule"
-          >
-            <i className="fa-solid fa-calendar-days" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "analytics" ? "active" : ""}`}
-            onClick={() => setActiveTab("analytics")}
-            data-tooltip="CRM Analytics"
-          >
-            <i className="fa-solid fa-chart-line" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "billing" ? "active" : ""}`}
-            onClick={() => setActiveTab("billing")}
-            data-tooltip="Paddle Billing"
-          >
-            <i className="fa-solid fa-credit-card" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "documents" ? "active" : ""}`}
-            onClick={() => setActiveTab("documents")}
-            data-tooltip="Document Hub"
-          >
-            <i className="fa-solid fa-file-contract" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "team" ? "active" : ""}`}
-            onClick={() => setActiveTab("team")}
-            data-tooltip="Team Leaderboard"
-          >
-            <i className="fa-solid fa-trophy" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "campaigns" ? "active" : ""}`}
-            onClick={() => setActiveTab("campaigns")}
-            data-tooltip="Email Campaigns"
-          >
-            <i className="fa-solid fa-envelope" style={{ fontSize: '18px' }}></i>
-          </div>
-          <div
-            className={`nav-item ${activeTab === "portal" ? "active" : ""}`}
-            onClick={() => setActiveTab("portal")}
-            data-tooltip="Client Portal Simulator"
-          >
-            <i className="fa-solid fa-mobile-screen-button" style={{ fontSize: '18px' }}></i>
+        {/* Search Pill */}
+        <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border-color)', borderRadius: '9999px', padding: '8px 8px 8px 24px', boxShadow: '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)', gap: '16px', cursor: 'pointer', transition: 'box-shadow 0.2s' }}>
+          <div onClick={() => setActiveTab("pipeline")} style={{ fontWeight: 500, fontSize: '14px' }}>Matches</div>
+          <div style={{ width: '1px', height: '24px', backgroundColor: 'var(--border-color)' }}></div>
+          <div onClick={() => setActiveTab("properties")} style={{ fontWeight: 500, fontSize: '14px' }}>Properties</div>
+          <div style={{ width: '1px', height: '24px', backgroundColor: 'var(--border-color)' }}></div>
+          <div onClick={() => setActiveTab("csv-ingest")} style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Add Leads</div>
+          <div style={{ width: '32px', height: '32px', backgroundColor: 'var(--color-cyan)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', marginLeft: '8px' }}>
+            <i className="fa-solid fa-magnifying-glass" style={{ fontSize: '12px' }}></i>
           </div>
         </div>
 
-        <div className="sidebar-nav" style={{ flexGrow: 0, gap: '1rem' }}>
-          <div 
-            className="nav-item" 
-            onClick={triggerRefresh} 
-            data-tooltip={seeding ? "Activating Org…" : `Sync CRM Core (${tenantName})`}
-          >
+        {/* User Utilities */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ fontWeight: 500, fontSize: '14px', cursor: 'pointer', padding: '12px', borderRadius: '24px' }} className="hover-bg" onClick={() => setActiveTab("analytics")}>
+            Analytics
+          </div>
+          <div style={{ cursor: 'pointer', padding: '12px', borderRadius: '50%' }} className="hover-bg" onClick={triggerRefresh}>
             <i className={`fa-solid fa-rotate ${seeding ? "fa-spin" : ""}`} style={{ fontSize: '16px' }}></i>
           </div>
-          <div 
-            className="nav-item" 
-            onClick={handleLogout} 
-            data-tooltip="Lock Case File"
-          >
-            <i className="fa-solid fa-lock" style={{ fontSize: '16px' }}></i>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '8px 12px', cursor: 'pointer', transition: 'box-shadow 0.2s' }} onClick={handleLogout}>
+            <i className="fa-solid fa-bars" style={{ fontSize: '14px', color: 'var(--text-main)' }}></i>
+            <div style={{ width: '32px', height: '32px', backgroundColor: 'var(--text-muted)', borderRadius: '50%', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <i className="fa-solid fa-user" style={{ fontSize: '14px' }}></i>
+            </div>
           </div>
         </div>
       </div>
