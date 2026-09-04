@@ -255,7 +255,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
               {importing ? (
                 <>
                   <i className="fa-solid fa-rotate fa-spin" style={{ fontSize: '16px', marginRight: '0.5rem' }}></i>
-                  Importing & Running Matcher...
+                  Importing & Running Matcher…
                 </>
               ) : (
                 "Execute Ingest & Matching"

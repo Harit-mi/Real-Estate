@@ -179,7 +179,7 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
                   }}
                 >
                   <i className="fa-solid fa-rotate fa-spin"></i>
-                  QUERYING SQLITE DATABASES...
+                  QUERYING SQLITE DATABASES…
                 </div>
               )}
             </div>
@@ -197,7 +197,7 @@ export default function CopilotPanel({ backendUrl }: CopilotPanelProps) {
             >
               <input
                 type="text"
-                placeholder="Ask Copilot or type database search query..."
+                placeholder="Ask Copilot or type database search query…"
                 className="form-control"
                 style={{
                   borderRadius: "4px",

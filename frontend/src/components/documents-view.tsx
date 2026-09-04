@@ -141,7 +141,7 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
               style={{ width: "100%", padding: "0.8rem" }}
               disabled={generating}
             >
-              {generating ? "Compiling Document..." : "Generate Agreement"}
+              {generating ? "Compiling Document…" : "Generate Agreement"}
             </button>
           </form>
         </div>
@@ -154,7 +154,7 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
           </h2>
 
           {loading && documents.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading archives...</div>
+            <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading archives…</div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxHeight: "300px", overflowY: "auto" }}>
               {documents.map((doc) => {
@@ -246,7 +246,7 @@ export default function DocumentsView({ backendUrl, refreshTrigger }: DocumentsV
                   className="btn btn-primary"
                   style={{ display: "inline-flex", gap: "0.25rem", alignItems: "center", padding: "0.4rem 0.8rem", fontSize: "0.75rem" }}
                 >
-                  {signing ? "Signing..." : (
+                  {signing ? "Signing…" : (
                     <>
                       <i className="fa-solid fa-file-signature"></i>
                       E-Sign Lock

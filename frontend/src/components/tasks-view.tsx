@@ -137,7 +137,7 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
 
         {loading && tasks.length === 0 ? (
           <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
-            Loading file checklist...
+            Loading file checklist…
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", overflowY: "auto", maxHeight: "400px" }}>
@@ -301,7 +301,7 @@ export default function TasksView({ backendUrl, refreshTrigger, onTaskChange }: 
             style={{ width: "100%", marginTop: "0.5rem", padding: "0.8rem" }}
             disabled={submitting}
           >
-            {submitting ? "Scheduling..." : "Schedule Event"}
+            {submitting ? "Scheduling…" : "Schedule Event"}
           </button>
         </form>
       </div>

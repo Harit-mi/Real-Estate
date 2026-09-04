@@ -221,7 +221,7 @@ export default function ClientPortal({ backendUrl, refreshTrigger, onFeedbackSub
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         <input 
                           type="text" 
-                          placeholder="Leave feedback comment (optional)..."
+                          placeholder="Leave feedback comment (optional)…"
                           className="form-control"
                           style={{ padding: "0.35rem 0.65rem", fontSize: "0.75rem", height: "auto" }}
                           value={feedbackComment}

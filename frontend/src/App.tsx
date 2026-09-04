@@ -200,7 +200,7 @@ function App() {
           <div 
             className="nav-item" 
             onClick={triggerRefresh} 
-            data-tooltip={seeding ? "Activating Org..." : `Sync CRM Core (${tenantName})`}
+            data-tooltip={seeding ? "Activating Org…" : `Sync CRM Core (${tenantName})`}
           >
             <i className={`fa-solid fa-rotate ${seeding ? "fa-spin" : ""}`} style={{ fontSize: '16px' }}></i>
           </div>

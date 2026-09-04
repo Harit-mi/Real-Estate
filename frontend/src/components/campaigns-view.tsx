@@ -163,7 +163,7 @@ export default function CampaignsView({ backendUrl, refreshTrigger }: CampaignsV
             {sending ? (
               <>
                 <i className="fa-solid fa-rotate fa-spin" style={{ fontSize: "16px" }}></i>
-                Broadcasting Email Campaigns...
+                Broadcasting Email Campaigns…
               </>
             ) : (
               <>

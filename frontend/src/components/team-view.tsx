@@ -58,7 +58,7 @@ export default function TeamView({ backendUrl, refreshTrigger }: TeamViewProps) 
         </h2>
 
         {loading && leaderboard.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading agency metrics...</div>
+          <div style={{ textAlign: "center", padding: "2rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading agency metrics…</div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {leaderboard.map((agent, index) => {

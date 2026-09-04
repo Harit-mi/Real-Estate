@@ -250,7 +250,7 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
             style={{ width: "100%", marginTop: "1rem", padding: "0.85rem" }}
             disabled={submitting}
           >
-            {submitting ? "Processing Matches..." : "Publish & Run Reverse-Matcher"}
+            {submitting ? "Processing Matches…" : "Publish & Run Reverse-Matcher"}
           </button>
         </form>
       </div>
@@ -263,7 +263,7 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
         </h2>
 
         {loading ? (
-          <div style={{ textAlign: "center", padding: "2rem", color: "var(--color-cyan)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading inventory spec sheets...</div>
+          <div style={{ textAlign: "center", padding: "2rem", color: "var(--color-cyan)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Loading inventory spec sheets…</div>
         ) : (
           <div style={{ overflowY: "auto", flexGrow: 1, display: "flex", flexDirection: "column", gap: "0.75rem", paddingRight: "0.25rem" }}>
             {properties.map((p) => {

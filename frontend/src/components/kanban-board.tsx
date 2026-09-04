@@ -235,7 +235,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
     <div style={{ position: "relative" }}>
       {loading && deals.length === 0 ? (
         <div style={{ textAlign: "center", padding: "3rem", color: "var(--text-muted)", fontWeight: 600 }}>
-          Loading Sales Pipeline...
+          Loading Sales Pipeline…
         </div>
       ) : (
         <div className="kanban-container">
@@ -466,7 +466,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
                         <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
                           <input
                             type="text"
-                            placeholder="Enter rejection reason..."
+                            placeholder="Enter rejection reason…"
                             className="form-control"
                             style={{ padding: "0.4rem 0.75rem", fontSize: "0.8rem" }}
                             value={rejectionReasons[p.id] || ""}
@@ -499,7 +499,7 @@ export default function KanbanBoard({ backendUrl, onRefreshTriggered, onDealSele
               <form onSubmit={handleAddNote} style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
                 <input
                   type="text"
-                  placeholder="Log manual follow-up or add custom note..."
+                  placeholder="Log manual follow-up or add custom note…"
                   className="form-control"
                   style={{ borderRadius: "8px" }}
                   value={noteContent}

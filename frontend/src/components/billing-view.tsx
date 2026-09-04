@@ -89,7 +89,7 @@ export default function BillingView({ backendUrl, refreshTrigger, onPlanUpgraded
           </h2>
 
           {loading && !tenant ? (
-            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Scanning licenses...</div>
+            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem", fontFamily: "var(--font-mono)", fontWeight: 600 }}>Scanning licenses…</div>
           ) : tenant ? (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div style={{ padding: "1.25rem", backgroundColor: "rgba(255,255,255,0.7)", border: "1px solid rgba(23,50,77,0.15)", borderRadius: "4px" }}>
@@ -268,7 +268,7 @@ export default function BillingView({ backendUrl, refreshTrigger, onPlanUpgraded
                 {checkoutSubmitting ? (
                   <>
                     <i className="fa-solid fa-rotate fa-spin"></i>
-                    Authorizing Payment...
+                    Authorizing Payment…
                   </>
                 ) : (
                   <>
