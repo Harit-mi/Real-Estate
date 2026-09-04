@@ -569,7 +569,6 @@ app.post("/api/csv/upload", upload.single("csvFile"), async (req, res) => {
     res.json({
       success: true,
       fileName: req.file.filename,
-      filePath,
       headers,
     });
   } catch (error: any) {
@@ -582,15 +581,15 @@ app.post("/api/csv/upload", upload.single("csvFile"), async (req, res) => {
  */
 app.post("/api/csv/import", async (req, res) => {
   try {
-    const { filePath, mapping } = req.body;
+    const { fileName, mapping } = req.body;
     const tenantId = await getTenantId();
 
-    if (!filePath || !mapping) {
-      return res.status(400).json({ error: "Missing filePath or mapping configuration" });
+    if (!fileName || !mapping) {
+      return res.status(400).json({ error: "Missing fileName or mapping configuration" });
     }
 
     // SEC-01 Path Traversal Mitigation: Strip directory segments and restrict to uploadDir
-    const safeFileName = path.basename(filePath);
+    const safeFileName = path.basename(fileName);
     const resolvedPath = path.join(uploadDir, safeFileName);
 
     if (!fs.existsSync(resolvedPath)) {

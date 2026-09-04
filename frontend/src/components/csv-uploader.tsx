@@ -10,7 +10,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [headers, setHeaders] = useState<string[]>([]);
-  const [uploadedFilePath, setUploadedFilePath] = useState("");
+  const [uploadedFileName, setUploadedFileName] = useState("");
   const [mapping, setMapping] = useState<Record<string, string>>({
     name: "",
     phone: "",
@@ -69,7 +69,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
       const data = await response.json();
       if (data.success) {
         setHeaders(data.headers);
-        setUploadedFilePath(data.filePath);
+        setUploadedFileName(data.fileName);
 
         const newMapping = { ...mapping };
         data.headers.forEach((header: string) => {
@@ -114,7 +114,7 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          filePath: uploadedFilePath,
+          fileName: uploadedFileName,
           mapping: mapping,
         }),
       });
