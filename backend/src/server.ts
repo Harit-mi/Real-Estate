@@ -155,7 +155,8 @@ app.post("/api/tenant/seed", async (req, res) => {
 
     res.json({ success: true, tenant, agent });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -195,7 +196,8 @@ app.get("/api/tenant/info", async (req, res) => {
 
     res.json({ tenant, agent });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -222,7 +224,8 @@ app.get("/api/contacts", async (req, res) => {
     });
     res.json(contacts);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -274,7 +277,8 @@ app.post("/api/contacts", async (req, res) => {
 
     res.json({ contact, matchesCount: matches.length });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -291,7 +295,8 @@ app.get("/api/properties", async (req, res) => {
     });
     res.json(properties);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -324,7 +329,8 @@ app.post("/api/properties", async (req, res) => {
 
     res.json({ property, matchesCount: matches.length });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -400,7 +406,8 @@ app.patch("/api/deals/:id/stage", async (req, res) => {
 
     res.json(updatedDeal);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -494,7 +501,8 @@ app.patch("/api/deals/:dealId/properties/:propertyId/status", async (req, res) =
 
     res.json(updatedAssociation);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -520,7 +528,8 @@ app.get("/api/activities", async (req, res) => {
     });
     res.json(activities);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -546,7 +555,8 @@ app.post("/api/activities", async (req, res) => {
 
     res.json(activity);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -572,7 +582,8 @@ app.post("/api/csv/upload", upload.single("csvFile"), async (req, res) => {
       headers,
     });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -658,7 +669,8 @@ app.post("/api/csv/import", async (req, res) => {
       matchesCreated: matchesTriggered,
     });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -682,7 +694,8 @@ app.get("/api/tasks", async (req, res) => {
     });
     res.json(tasks);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -717,7 +730,8 @@ app.post("/api/tasks", async (req, res) => {
 
     res.json(task);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -731,7 +745,8 @@ app.patch("/api/tasks/:id/status", async (req, res) => {
     });
     res.json(task);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -755,7 +770,8 @@ app.post("/api/tenant/subscription", async (req, res) => {
 
     res.json({ success: true, tenant });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -842,7 +858,8 @@ app.post("/api/copilot/query", async (req, res) => {
 
     res.json({ reply, data: dataPayload });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -897,7 +914,8 @@ app.post("/api/client-portal/feedback", async (req, res) => {
 
     res.json({ success: true, updated });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -916,7 +934,8 @@ app.get("/api/documents", async (req, res) => {
     });
     res.json(documents);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -1015,7 +1034,8 @@ The Client agrees to pay a fixed brokerage fee of **2.0% (Two Percent)** of the 
 
     res.json(doc);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -1096,7 +1116,8 @@ app.get("/api/agents/leaderboard", async (req, res) => {
 
     res.json(leaderboard);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
@@ -1126,7 +1147,8 @@ app.post("/api/campaigns/broadcast", async (req, res) => {
 
     res.json({ success: true, targetCount: contacts.length });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "An internal server error occurred." });
   }
 });
 
