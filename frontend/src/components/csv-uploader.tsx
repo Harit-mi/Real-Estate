@@ -143,12 +143,12 @@ export default function CSVUploader({ backendUrl, onImportComplete }: CSVUploade
   return (
     <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", marginBottom: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)", position: "relative" }}>
       <div style={{ position: "absolute", top: "1rem", right: "2rem", border: "2px dashed var(--color-thread)", color: "var(--color-thread)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", fontWeight: 700, padding: "0.25rem 0.5rem", transform: "rotate(4deg)" }}>
-        [ INCOMING_DOSSIER_INTAKE ]
+        [ LEAD INTAKE ]
       </div>
 
       <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
         <i className="fa-solid fa-file-csv" style={{ fontSize: '20px', color: 'var(--color-navy)', marginRight: '0.5rem' }}></i>
-        BULK DOSSIER CSV INGESTION
+        BULK LEAD CSV IMPORT
       </h2>
       
       {/* File Upload Zone */}

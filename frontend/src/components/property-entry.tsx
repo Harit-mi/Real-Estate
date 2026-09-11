@@ -123,10 +123,10 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
       {/* Property Input Form - Styled like a Manila Case file folder */}
-      <div style={{ backgroundColor: "var(--color-manila)", border: "2px solid var(--color-navy)", borderRadius: "var(--radius-sm)", padding: "2rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.15)" }}>
-        <h2 style={{ fontSize: "1.20rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-navy)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
-          <i className="fa-solid fa-building" style={{ fontSize: '20px', color: 'var(--color-navy)', marginRight: '0.5rem' }}></i>
-          NEW PROPERTY DOSSIER INGEST
+      <div style={{ backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)", borderRadius: "var(--radius-lg)", padding: "2rem", boxShadow: "0 6px 16px rgba(0,0,0,0.06)" }}>
+        <h2 style={{ fontSize: "1.20rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--text-main)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(23,50,77,0.2)", paddingBottom: "0.5rem" }}>
+          <i className="fa-solid fa-building" style={{ fontSize: '20px', color: 'var(--text-main)', marginRight: '0.5rem' }}></i>
+          Add New Property
         </h2>
 
         {matchResult && (
@@ -256,10 +256,10 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
       </div>
 
       {/* Property Inventory List - Styled like a Blueprint spec file layout */}
-      <div style={{ backgroundColor: "var(--color-navy)", border: "2px solid var(--color-cyan)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", maxHeight: "600px", boxShadow: "2px 4px 10px rgba(0,0,0,0.3)" }}>
+      <div style={{ backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)", borderRadius: "var(--radius-lg)", padding: "2rem", display: "flex", flexDirection: "column", maxHeight: "600px", boxShadow: "0 6px 16px rgba(0,0,0,0.06)" }}>
         <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-cyan)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1.5px dashed rgba(94,194,224,0.3)", paddingBottom: "0.5rem" }}>
           <i className="fa-solid fa-building" style={{ fontSize: '20px', color: 'var(--color-cyan)', marginRight: '0.5rem' }}></i>
-          ACTIVE BLUEPRINT INVENTORY ({properties.length})
+          Property Inventory ({properties.length})
         </h2>
 
         {loading ? (
@@ -275,8 +275,7 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
                   key={p.id} 
                   style={{ 
                     cursor: "default",
-                    backgroundColor: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(94, 194, 224, 0.4)",
+                    backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)",
                     borderRadius: "4px",
                     padding: "1.25rem",
                     position: "relative",
@@ -289,14 +288,14 @@ export default function PropertyEntry({ backendUrl, onPropertyAdded }: PropertyE
                   {!isSold && !isHold && <div className="ink-stamp won" style={{ fontSize: "0.75rem" }}>AVAILABLE</div>}
 
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", opacity: isSold ? 0.35 : 1 }}>
-                    <h4 style={{ fontSize: "0.95rem", fontWeight: 700, fontFamily: "var(--font-sans)", color: "#ffffff" }}>{p.title}</h4>
+                    <h4 style={{ fontSize: "0.95rem", fontWeight: 700, fontFamily: "var(--font-sans)", color: "var(--text-main)" }}>{p.title}</h4>
                   </div>
                   <p style={{ fontSize: "0.8rem", color: "var(--color-cyan)", marginTop: "0.25rem", fontFamily: "var(--font-mono)", opacity: isSold ? 0.35 : 1 }}>
                     {p.location}
                   </p>
                   
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", marginTop: "0.75rem", color: "#ffffff", fontFamily: "var(--font-mono)", opacity: isSold ? 0.35 : 1 }}>
-                    <span style={{ color: "rgba(255,255,255,0.6)" }}>{p.bedrooms} BHK · {p.area} {p.areaUnit}</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", marginTop: "0.75rem", color: "var(--text-main)", fontFamily: "var(--font-mono)", opacity: isSold ? 0.35 : 1 }}>
+                    <span style={{ color: "var(--text-muted)" }}>{p.bedrooms} BHK · {p.area} {p.areaUnit}</span>
                     <span style={{ color: "var(--color-cyan)" }}>{formatPrice(p.price, p.currency)}</span>
                   </div>
                 </div>

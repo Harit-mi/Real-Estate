@@ -72,36 +72,41 @@ function App() {
     setSelectedPhoneContact({ name, phone, dealId });
   };
 
-  if (!isAuthenticated) {
+    if (!isAuthenticated) {
     return (
-      <div className="case-file-auth-overlay">
-        <form className="case-file-folder" onSubmit={handleLogin}>
-          <h2>UNSEAL CASE FILE DOSSIER</h2>
-          <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: "1.5rem", fontStyle: "italic" }}>
-            PropMatch AI Intelligence Desk Ingest
-          </p>
-          <div className="form-group">
-            <label>Agent Email Address</label>
-            <input 
-              type="email" 
-              required 
-              className="form-control" 
-              defaultValue="harit.mishra@propmatch.ai" 
-              placeholder="agent@propmatch.ai"
-            />
+      <div style={{ display: 'flex', width: '100vw', height: '100vh', backgroundColor: 'var(--bg-page)', alignItems: 'center', justifyContent: 'center' }}>
+        <form onSubmit={handleLogin} style={{ width: '400px', padding: '32px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: '0 6px 16px rgba(0,0,0,0.12)', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          
+          <div style={{ color: 'var(--color-cyan)', fontSize: '40px', textAlign: 'center', marginBottom: '8px' }}>
+            <i className="fa-brands fa-airbnb"></i>
           </div>
-          <div className="form-group">
-            <label>Dossier Access Key</label>
-            <input 
-              type="password" 
-              required 
-              className="form-control" 
-              defaultValue="PM-8751-2026" 
-              placeholder="••••••••••••"
-            />
+          
+          <div>
+            <h2 style={{ fontSize: '24px', fontWeight: 600, textAlign: 'center', margin: 0 }}>Welcome to PropMatch</h2>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)', textAlign: 'center', marginTop: '8px' }}>Log in to access your property dashboard.</p>
           </div>
-          <button type="submit" className="btn btn-primary" style={{ marginTop: "1rem" }}>
-            OPEN CASE FILE
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', overflow: 'hidden' }}>
+              <input 
+                type="email" 
+                required 
+                defaultValue="harit.mishra@propmatch.ai" 
+                placeholder="Email address"
+                style={{ width: '100%', padding: '16px', border: 'none', borderBottom: '1px solid var(--border-color)', outline: 'none', fontSize: '16px' }}
+              />
+              <input 
+                type="password" 
+                required 
+                defaultValue="PM-8751-2026" 
+                placeholder="Password"
+                style={{ width: '100%', padding: '16px', border: 'none', outline: 'none', fontSize: '16px' }}
+              />
+            </div>
+          </div>
+          
+          <button type="submit" className="btn-primary" style={{ width: '100%', padding: '14px', fontSize: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'center', display: 'block' }}>
+            Continue
           </button>
         </form>
       </div>
@@ -149,76 +154,7 @@ function App() {
 
       {/* Main Panel Content */}
       <div className="main-content">
-        <div className="header">
-          <div className="header-title">
-            {activeTab === "dashboard" && (
-              <>
-                <h1>CRM Dashboard</h1>
-                <p>Welcome to PropMatch Smart Real Estate Intelligence Engine</p>
-              </>
-            )}
-            {activeTab === "pipeline" && (
-              <>
-                <h1>Pipeline & Deals</h1>
-                <p>Track matching and sales pipeline progress across multi-property deals</p>
-              </>
-            )}
-            {activeTab === "csv-ingest" && (
-              <>
-                <h1>CSV Lead Import</h1>
-                <p>Ingest bulk lead requirements from Excel spreadsheets without APIs</p>
-              </>
-            )}
-            {activeTab === "properties" && (
-              <>
-                <h1>Inventory & Market Map</h1>
-                <p>Register property listings to reverse-match with buyers and visualize geographical distribution</p>
-              </>
-            )}
-            {activeTab === "tasks" && (
-              <>
-                <h1>Event Schedule</h1>
-                <p>Log client follow-ups, tours, and site visits inside the local database</p>
-              </>
-            )}
-            {activeTab === "analytics" && (
-              <>
-                <h1>CRM Analytics</h1>
-                <p>Track matching accuracy distributions and real-time deal stage pipelines</p>
-              </>
-            )}
-            {activeTab === "billing" && (
-              <>
-                <h1>Paddle Billing & Quota Limit Simulator</h1>
-                <p>Manage subscription licenses and upgrade lead database capacity</p>
-              </>
-            )}
-            {activeTab === "documents" && (
-              <>
-                <h1>Document Management Hub</h1>
-                <p>Auto-generate rental agreement templates and sales deeds for won deals</p>
-              </>
-            )}
-            {activeTab === "team" && (
-              <>
-                <h1>Team Leaderboard & splits</h1>
-                <p>Track closed transaction volumes and commission splits across brokerage desk agents</p>
-              </>
-            )}
-            {activeTab === "campaigns" && (
-              <>
-                <h1>Marketing Campaigns</h1>
-                <p>Compose newsletter broadcasts showcasing property inventories to cold leads</p>
-              </>
-            )}
-            {activeTab === "portal" && (
-              <>
-                <h1>Shareable Client Portal</h1>
-                <p>Simulate client swipe feedback on matched recommendations (bi-directional sync)</p>
-              </>
-            )}
-          </div>
-        </div>
+        
 
         {/* Tab Router Panels */}
         {activeTab === "dashboard" && (

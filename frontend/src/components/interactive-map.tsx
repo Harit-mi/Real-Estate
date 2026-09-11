@@ -57,7 +57,7 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
   };
 
   return (
-    <div style={{ backgroundColor: "var(--color-navy)", border: "2px solid var(--color-cyan)", borderRadius: "var(--radius-sm)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", boxShadow: "2px 4px 10px rgba(0,0,0,0.3)" }}>
+    <div style={{ backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)", borderRadius: "var(--radius-lg)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", boxShadow: "0 6px 16px rgba(0,0,0,0.06)" }}>
       <div>
         <h2 style={{ fontSize: "1.2rem", fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--color-cyan)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <i className="fa-solid fa-map-location-dot" style={{ color: "var(--color-cyan)" }}></i>
@@ -82,7 +82,7 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
           }}
         >
           {/* Legend */}
-          <div style={{ position: "absolute", top: "1rem", left: "1rem", backgroundColor: "var(--color-navy)", border: "1px solid rgba(94, 194, 224, 0.3)", padding: "0.5rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", flexDirection: "column", gap: "0.25rem", zIndex: 10 }}>
+          <div style={{ position: "absolute", top: "1rem", left: "1rem", backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)", border: "1px solid var(--border-color)", padding: "0.5rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", flexDirection: "column", gap: "0.25rem", zIndex: 10 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-cyan)" }}>
               <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--color-cyan)" }} /> Active Listings
             </div>
@@ -98,7 +98,7 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
               fill="none" 
               stroke="rgba(94, 194, 224, 0.2)" 
               strokeWidth="4" 
-              strokeDasharray="4 4"
+              strokeDasharray="4 4" stroke="var(--border-color)"
             />
             <path 
               d="M 150,60 L 180,160 L 70,220" 
@@ -215,7 +215,7 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
             <div style={{ margin: "auto", textAlign: "center", color: "var(--color-navy)", padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", fontFamily: "var(--font-mono)" }}>
               <i className="fa-solid fa-star fa-spin" style={{ fontSize: "32px", color: "var(--color-thread)" }}></i>
               <p style={{ fontSize: "0.85rem", fontWeight: 600 }}>
-                Select a sub-market node on the blueprint map canvas to load property inventory distribution.
+                Select a sub-market node on the map to load property inventory distribution.
               </p>
             </div>
           )}
