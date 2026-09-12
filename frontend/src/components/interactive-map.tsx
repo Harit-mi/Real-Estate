@@ -82,7 +82,7 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
           }}
         >
           {/* Legend */}
-          <div style={{ position: "absolute", top: "1rem", left: "1rem", backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)", border: "1px solid var(--border-color)", padding: "0.5rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", flexDirection: "column", gap: "0.25rem", zIndex: 10 }}>
+          <div style={{ position: "absolute", top: "1rem", left: "1rem", backgroundColor: "var(--bg-page)", border: "1px solid var(--border-color)", padding: "0.5rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", flexDirection: "column", gap: "0.25rem", zIndex: 10 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-cyan)" }}>
               <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--color-cyan)" }} /> Active Listings
             </div>
@@ -96,7 +96,7 @@ export default function InteractiveMap({ backendUrl, refreshTrigger }: Interacti
             <path 
               d="M 80,110 Q 180,160 260,200 T 380,50" 
               fill="none" 
-              stroke="rgba(94, 194, 224, 0.2)" 
+               
               strokeWidth="4" 
               strokeDasharray="4 4" stroke="var(--border-color)"
             />
